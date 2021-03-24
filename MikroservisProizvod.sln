@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domen", "Domen\Domen.csproj", "{4853A117-99D3-44B8-B38D-009553EAC952}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MikroservisProizvod.Test", "MikroservisProizvod.Test\MikroservisProizvod.Test.csproj", "{BD4B9723-4B1E-461C-990E-377C4942C8C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MikroservisProizvod.API", "MikroservisProizvod.API\MikroservisProizvod.API.csproj", "{56476F6F-DD20-4637-A0B5-6D78B581B3ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{4853A117-99D3-44B8-B38D-009553EAC952}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4853A117-99D3-44B8-B38D-009553EAC952}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4853A117-99D3-44B8-B38D-009553EAC952}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD4B9723-4B1E-461C-990E-377C4942C8C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD4B9723-4B1E-461C-990E-377C4942C8C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD4B9723-4B1E-461C-990E-377C4942C8C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD4B9723-4B1E-461C-990E-377C4942C8C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56476F6F-DD20-4637-A0B5-6D78B581B3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56476F6F-DD20-4637-A0B5-6D78B581B3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56476F6F-DD20-4637-A0B5-6D78B581B3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56476F6F-DD20-4637-A0B5-6D78B581B3ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
