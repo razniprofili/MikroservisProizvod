@@ -4,12 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domen
 {
-    public class Proizvod
+    public class Proizvod : BaseEntity
     {
-        [Key]
-        public long Id { get; set; }
-        [Required]
-        public string Naziv { get; set; }
         [Required]
         public double Cena { get; set; }
         [Required]
@@ -18,8 +14,11 @@ namespace Domen
         public long TipProizvodaId { get; set; }
         public TipProizvoda TipProizvoda { get; set; }
 
+        public long JedinicaMereId { get; set; }
+        public JedinicaMere JedinicaMere { get; set; }
+
         public List<Dobavljac> Dobavljaci { get; set; }
 
-        // jedinica mere?
+        
     }
 }

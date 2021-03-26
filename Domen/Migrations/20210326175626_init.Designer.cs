@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domen.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210324202703_init")]
+    [Migration("20210326175626_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,6 +56,65 @@ namespace Domen.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dobavljac");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Napomena = "Isporuka svakog prvog u mesecu.",
+                            Naziv = "Maxi",
+                            PIB = "11223344"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Naziv = "Dobavljac DOO",
+                            PIB = "9874512"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Naziv = "Bio Spajz",
+                            PIB = "9745123"
+                        });
+                });
+
+            modelBuilder.Entity("Domen.JedinicaMere", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Naziv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JedinicaMere");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Naziv = "Komad"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Naziv = "Kilogram"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Naziv = "Litar"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Naziv = "Gram"
+                        });
                 });
 
             modelBuilder.Entity("Domen.Proizvod", b =>
@@ -68,6 +127,9 @@ namespace Domen.Migrations
                     b.Property<double>("Cena")
                         .HasColumnType("float");
 
+                    b.Property<long>("JedinicaMereId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Naziv")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,6 +141,8 @@ namespace Domen.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JedinicaMereId");
 
                     b.HasIndex("TipProizvodaId");
 
@@ -99,6 +163,28 @@ namespace Domen.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipProizvoda");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Naziv = "Mlecni proizvod"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Naziv = "Slatkis"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Naziv = "Delikates"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Naziv = "Pice"
+                        });
                 });
 
             modelBuilder.Entity("DobavljacProizvod", b =>
@@ -118,11 +204,19 @@ namespace Domen.Migrations
 
             modelBuilder.Entity("Domen.Proizvod", b =>
                 {
+                    b.HasOne("Domen.JedinicaMere", "JedinicaMere")
+                        .WithMany()
+                        .HasForeignKey("JedinicaMereId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domen.TipProizvoda", "TipProizvoda")
                         .WithMany()
                         .HasForeignKey("TipProizvodaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("JedinicaMere");
 
                     b.Navigation("TipProizvoda");
                 });

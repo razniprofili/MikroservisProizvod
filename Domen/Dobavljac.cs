@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace Domen
 {
-    public class Dobavljac
+    public class Dobavljac : BaseEntity
     {
-        [Key]
-        public long Id { get; set; }
+
         [Required]
         public string PIB { get; set; }
-        [Required]
-        public string Naziv { get; set; }
         
         public string Napomena { get; set; } // moze null?
 
