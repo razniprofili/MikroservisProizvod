@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace MikroservisProizvod.API
+namespace Common
 {
     public class ResourceParameters
     {
@@ -20,6 +17,5 @@ namespace MikroservisProizvod.API
             get => _pageSize;
             set => _pageSize = (value > maxPageSize) ? maxPageSize : value;
         }
-
     }
 }

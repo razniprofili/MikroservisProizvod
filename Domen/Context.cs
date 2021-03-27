@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Helpers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,8 @@ namespace Domen
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server = TMILOSEVIC-HP; Database = MikroservisProizvodDB; Trusted_Connection = True;"); // dodati konekcioni string u config file u APIju!
+            //optionsBuilder.UseSqlServer("Server = TMILOSEVIC-HP; Database = MikroservisProizvodDB; Trusted_Connection = True;");
+            optionsBuilder.UseSqlServer(Helper.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
