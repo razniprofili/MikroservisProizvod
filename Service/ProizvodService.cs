@@ -31,14 +31,14 @@ namespace Service
 
         public List<Proizvod> Search(ResourceParameters parameters)
         {
-            ICollection<Proizvod> proizvodi = !string.IsNullOrWhiteSpace(parameters.SearchQuery)
+            var proizvodi = !string.IsNullOrWhiteSpace(parameters.SearchQuery)
                 ? _uow.Proizvodi.Search(p => p.Cena.ToString() == parameters.SearchQuery
                     || p.Naziv.Contains(parameters.SearchQuery)
                     || p.Pdv.ToString() == parameters.SearchQuery
                     || p.Id.ToString() == parameters.SearchQuery)
                 : _uow.Proizvodi.GetAll();
 
-            return PagedList<Proizvod>.Create(proizvodi, parameters.PageNumber, parameters.PageSize);
+            return PagedList<Proizvod>.Create(proizvodi.ToList(), parameters.PageNumber, parameters.PageSize);
 
         }
 

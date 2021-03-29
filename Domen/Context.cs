@@ -19,7 +19,7 @@ namespace Domen
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer("Server = TMILOSEVIC-HP; Database = MikroservisProizvodDB; Trusted_Connection = True;");
-            optionsBuilder.UseSqlServer(Helper.ConnectionString);
+            optionsBuilder.UseSqlServer("Server = localhost\\SQLEXPRESS; Database = MikroservisProizvodDB; Trusted_Connection = True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

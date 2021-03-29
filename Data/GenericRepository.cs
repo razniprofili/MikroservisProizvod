@@ -33,16 +33,16 @@ namespace Data
             return _context.Set<T>().Find(id);
         }
 
-        public ICollection<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>();
         }
 
-        public ICollection<T> Search(Expression<Func<T, bool>> expression)
+        public IQueryable<T> Search(Expression<Func<T, bool>> expression)
         {
             var query = _context.Set<T>().AsQueryable();
 
-            return query.Where(expression).ToList();
+            return query.Where(expression);
         }
 
         public virtual T FirstOrDefault(Expression<Func<T, bool>> match, string includePropreties = null)
@@ -72,6 +72,17 @@ namespace Data
             _context.SaveChanges();
 
             return entity;
+        }
+
+        public void Delete(long id)
+        {
+            var dbSet = _context.Set<T>();
+
+            T entityToRemove = dbSet.FirstOrDefault(x => x.Id == id);
+
+            dbSet.Remove(entityToRemove);
+
+            _context.SaveChanges();
         }
     }
 }

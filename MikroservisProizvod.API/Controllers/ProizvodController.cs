@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Common;
-using Data.Uow;
 using Microsoft.AspNetCore.Mvc;
 using MikroservisProizvod.API.Helpers;
 using MikroservisProizvod.API.Models;
-using Service;
+using MikroServisProizvod.Application.IServices;
+using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,27 +17,38 @@ namespace MikroservisProizvod.API.Controllers
     [Route("api/Proizvod")]
     public class ProizvodController : Controller
     {
-        private IProizvodService _proizvodService;
-        private IMapper _mapper;
 
-        public ProizvodController(IProizvodService proizvodService, IMapper mapper)
+        [HttpGet]
+        public IActionResult SearchProizvod([FromQuery] ProizvodSearch search, [FromServices] ISearchProizvodsService service)
         {
-            _proizvodService = proizvodService;
-            _mapper = mapper;
+            return Ok(service.Search(search));
         }
 
         [HttpGet("{id:long}")]
-        public ProizvodModel PrikaziProizvod(long id)
+        public IActionResult FindProizvod(long id, [FromServices] IFindProizvodService service)
         {
-            var proizvod = _proizvodService.Get(id);
-
-            return _mapper.Map<ProizvodModel>(proizvod);
+            return Ok(service.Find(id));
         }
 
-        [HttpGet]
-        public List<ProizvodModel> PretraziProizvode([FromQuery] ResourceParameters parameters)
+        [HttpPut("{id:long}")]
+        public IActionResult UpdateProizvod(long id,[FromBody] ProizvodDto dto, [FromServices] IUpdateProizvodService service)
         {
-            return new List<ProizvodModel>();
+            dto.Id = id;
+            return Ok(service.Update(dto));
+        }
+
+        [HttpPost]
+        public IActionResult AddProizvod([FromBody] ProizvodDto dto, [FromServices] IAddProzivodService service)
+        {
+            return Ok(service.Add(dto));
+        }
+
+        [HttpDelete("{id:long}")]
+        public IActionResult DeleteProizvod(long id, [FromServices] IDeleteProizvodService service)
+        {
+            service.Delete(id);
+
+            return Ok();
         }
     }
 }
