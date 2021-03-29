@@ -13,6 +13,6 @@ namespace MikroServisProizvod.Application.IServices.ProizvodServices.Models
         public double Pdv { get; set; }
         public TipProizvodaDto TipProizvoda { get; set; }
         public JedinicaMereDto JedinicaMere { get; set; }
-        public DobavljacDto Dobavljac { get; set; }
+        public List<DobavljacDto> Dobavljaci { get; set; }
     }
 }

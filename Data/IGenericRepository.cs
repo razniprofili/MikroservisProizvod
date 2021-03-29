@@ -13,7 +13,7 @@ namespace Data
         T Add(T entity);
         T Update(T entity);
         T Get(long id);
-        IQueryable<T> Search(Expression<Func<T, bool>> expression);
+        IQueryable<T> Search(Expression<Func<T, bool>> expression, string includePropreties = null);
         IQueryable<T> GetAll();
         T FirstOrDefault(Expression<Func<T, bool>> match, string includePropreties = null);
         void Delete(long id);

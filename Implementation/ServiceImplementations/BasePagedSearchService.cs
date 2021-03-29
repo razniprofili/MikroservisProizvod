@@ -27,7 +27,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         public virtual object Search(TSearch search)
         {
-            var entities = GenericRepository.Search(Expression(search));
+            var entities = GenericRepository.Search(Expression(search), "TipProizvoda,JedinicaMere");
 
             var totalCount = entities.Count();
 
