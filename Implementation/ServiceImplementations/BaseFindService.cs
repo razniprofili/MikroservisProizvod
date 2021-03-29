@@ -21,7 +21,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         public TDto Find(long id)
         {
-            var entity = GenericRepository.FirstOrDefault(x => x.Id == id, "JedinicaMere,TipProizvoda");
+            var entity = GenericRepository.FirstOrDefault(x => x.Id == id, "JedinicaMere,TipProizvoda,Dobavljaci");
 
             if (entity == null) 
             {
