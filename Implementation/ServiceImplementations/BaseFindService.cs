@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Data;
 using Domen;
+using FluentValidation;
 using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.DefaultServices;
 using System;
@@ -21,19 +22,15 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         public TDto Find(long id)
         {
-            TEntity entity;
-            if (IncludedEntities.Length > 0)
-            {
-                entity = GenericRepository.FirstOrDefault(x => x.Id == id, IncludedEntities);
-            }
-            else
-            {
-                entity = GenericRepository.FirstOrDefault(x => x.Id == id);
-            }
 
+            TEntity entity = IncludedEntities.Length > 0
+                ? GenericRepository.FirstOrDefault(x => x.Id == id, IncludedEntities)
+                : GenericRepository.FirstOrDefault(x => x.Id == id);
+            
             if (entity == null) 
             {
-                return null;
+                //return null;
+                throw new ValidationException("Nepostojeci proizvod.");
             }
 
             var parsedDto = Mapper.Map<TDto>(entity);
