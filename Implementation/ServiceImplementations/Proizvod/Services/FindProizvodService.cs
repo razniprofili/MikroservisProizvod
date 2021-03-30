@@ -15,5 +15,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Ser
         public FindProizvodService(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {
         }
+
+        public override string IncludedEntities => "JedinicaMere,TipProizvoda,Dobavljaci";
     }
 }

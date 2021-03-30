@@ -21,7 +21,15 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         public TDto Find(long id)
         {
-            var entity = GenericRepository.FirstOrDefault(x => x.Id == id, "JedinicaMere,TipProizvoda,Dobavljaci");
+            TEntity entity;
+            if (IncludedEntities.Length > 0)
+            {
+                entity = GenericRepository.FirstOrDefault(x => x.Id == id, IncludedEntities);
+            }
+            else
+            {
+                entity = GenericRepository.FirstOrDefault(x => x.Id == id);
+            }
 
             if (entity == null) 
             {
@@ -32,5 +40,6 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
             return parsedDto;
         }
+        public virtual string IncludedEntities => "";
     }
 }

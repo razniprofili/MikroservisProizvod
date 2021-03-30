@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.BaseModels
 {
-    public class PagedSearch
+    public abstract class PagedSearch
     {
         public bool IsPagedResponse { get; set; }
         const int maxPageSize = 20;

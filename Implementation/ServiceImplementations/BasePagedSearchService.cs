@@ -19,28 +19,35 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
         where TDto : BaseDto
         where TSearch : PagedSearch
     {
-        private readonly IMapper Mapper;
         protected BasePagedSearchService(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {
-            Mapper = mapper;
         }
 
         public virtual object Search(TSearch search)
         {
-            var entities = GenericRepository.Search(Expression(search), "TipProizvoda,JedinicaMere,Dobavljaci");
+            IQueryable<TEntity> entities;
+
+            if(IncludedProperties.Length > 0) 
+            { 
+                entities = GenericRepository.Search(Expression(search), IncludedProperties);//"TipProizvoda,JedinicaMere,Dobavljaci"
+            }
+            else
+            {
+                entities = GenericRepository.Search(Expression(search));
+            }
 
             var totalCount = entities.Count();
 
             if (search.IsPagedResponse)
             {
-                entities = entities.Skip((search.PageNumber > 0 ? search.PageNumber - 1 : 0) * search.PageSize);
+                entities = entities.Skip((search.PageNumber > 0 ? search.PageNumber - 1 : 0) * search.PageSize).Take(search.PageSize);
             }
             else
             {
                 return Mapper.Map<IEnumerable<TDto>>(entities.ToList());
             }
 
-            var parsedDtos = Mapper.Map<IEnumerable<TDto>>(entities);
+            var parsedDtos = Mapper.Map<IEnumerable<TDto>>(entities.ToList());
 
             return new PagedResponse<TDto>
             {
@@ -51,6 +58,8 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
                 TotalCount = totalCount
             };
         }
+
+        protected virtual string IncludedProperties => "";
 
         protected abstract Expression<Func<TEntity, bool>> Expression(TSearch search);
     }

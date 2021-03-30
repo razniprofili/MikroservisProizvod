@@ -25,5 +25,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Ser
 
             return expression;
         }
+
+        protected override string IncludedProperties => "JedinicaMere,TipProizvoda,Dobavljaci";
     }
 }
