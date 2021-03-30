@@ -45,6 +45,9 @@ namespace MikroservisProizvod.API.Middleware
             if (ex is ValidationException)
                 code = HttpStatusCode.BadRequest; //400
 
+            if (ex is FluentValidation.ValidationException)
+                code = HttpStatusCode.BadRequest; //400
+
             var result = JsonConvert.SerializeObject(
                 new
                 {

@@ -11,7 +11,7 @@ namespace Data
 {
     public class ProizvodRepository : GenericRepository<Proizvod>, IProizvodRepository
     {
-        public ProizvodRepository(DbContext context) : base(context)
+        public ProizvodRepository(Context context) : base(context)
         {
 
         }

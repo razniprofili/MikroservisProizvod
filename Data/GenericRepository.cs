@@ -33,17 +33,17 @@ namespace Data
             return _context.Set<T>().Find(id);
         }
 
-        public ICollection<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>();
         }
 
-        public ICollection<T> Search(Expression<Func<T, bool>> expression)
-        {
-            var query = _context.Set<T>().AsQueryable();
+        //public IQueryable<T> Search(Expression<Func<T, bool>> expression)
+        //{
+        //    var query = _context.Set<T>().AsQueryable();
 
-            return query.Where(expression).ToList();
-        }
+        //    return query.Where(expression);
+        //}
 
         public virtual T FirstOrDefault(Expression<Func<T, bool>> match, string includePropreties = null)
         {
@@ -61,6 +61,21 @@ namespace Data
             return query.FirstOrDefault(match);
         }
 
+        public IQueryable<T> Search(Expression<Func<T, bool>> match, string includePropreties = null) // includePropreties je opcioni parametar
+        {
+            var query = _context.Set<T>().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(includePropreties))
+            {
+                //da bude ovako: "User, MovieJMDBApi" npr
+                foreach (var prop in includePropreties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(prop);
+                }
+            }
+            return query.Where(match);
+        }
+
         public T Update(T entity)
         {
             T entityToUpdate = _context.Set<T>().Find(entity.Id);
@@ -72,6 +87,17 @@ namespace Data
             _context.SaveChanges();
 
             return entity;
+        }
+
+        public void Delete(long id)
+        {
+            var dbSet = _context.Set<T>();
+
+            T entityToRemove = dbSet.FirstOrDefault(x => x.Id == id);
+
+            dbSet.Remove(entityToRemove);
+
+            _context.SaveChanges();
         }
     }
 }

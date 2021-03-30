@@ -1,5 +1,5 @@
+using AutoMapper;
 using Common.Helpers;
-using Data.Uow;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,12 +7,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MikroservisProizvod.API.Middleware;
-using MikroservisProizvod.API.Profiles;
-using Service;
+using MikroServisProizvod.Implementation.Profiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MikroservisProizvod.API.ApiCore;
+using Domen;
+using Microsoft.EntityFrameworkCore;
 
 namespace MikroservisProizvod.API
 {
@@ -34,10 +36,20 @@ namespace MikroservisProizvod.API
 
             services.AddCors();
 
-            services.AddScoped<IProizvodService, ProizvodService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddAutoMapper(typeof(ProizvodProfile));
+            services.AddDbContext<Context>();
+            services.AddAutoMapper();
+            services.AddValidators();
+            services.SetUpApplication();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "ProizvodAPI",
+                    Description = ""  
+                 });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,21 +66,21 @@ namespace MikroservisProizvod.API
                 .AllowAnyHeader()
                 .AllowCredentials()
                 .SetIsOriginAllowed((hosts) => true)
-);
+                );
 
             app.UseMvc();
 
             app.UseRouting();
 
-            
+            app.UseSwagger();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapGet("/", async context =>
-            //    {
-            //        await context.Response.WriteAsync("Hello World!");
-            //    });
-            //});
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProizvodAPI");
+
+            });
+
+
         }
     }
 }

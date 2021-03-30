@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Common
+namespace MikroServisProizvod.Application.BaseModels
 {
-    public class ResourceParameters
+    public abstract class PagedSearch
     {
-        //za pretragu
-        public string SearchQuery { get; set; }
-
-        //stranicenje
+        public bool IsPagedResponse { get; set; }
         const int maxPageSize = 20;
         public int PageNumber { get; set; } = 1;
 
