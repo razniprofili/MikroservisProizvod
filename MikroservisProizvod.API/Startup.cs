@@ -23,7 +23,7 @@ namespace MikroservisProizvod.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Helper.ConnectionString = Configuration.GetConnectionString("DemoDatabase");
+            
         }
 
         public IConfiguration Configuration { get; }
