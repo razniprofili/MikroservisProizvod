@@ -30,7 +30,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
             if (entity == null) 
             {
                 //return null;
-                throw new ValidationException("Nepostojeci proizvod.");
+                throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()}.");
             }
 
             var parsedDto = Mapper.Map<TDto>(entity);

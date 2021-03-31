@@ -24,15 +24,20 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         public virtual TDto Update(TDto dto)
         {
+            var entity = GenericRepository.FirstOrDefault(x => x.Id == dto.Id);
+
+            if(entity is null) // prvo proverimo da li entitet za azuriranje postoji u bazi, pa onda sve ostalo
+            {
+                throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()} poslat na azuriranje.");
+            }
+
             var validationResult = Validator.Validate(dto);
 
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors.AsEnumerable());
             }
-
-            var entity = GenericRepository.FirstOrDefault(x => x.Id == dto.Id);
-
+            
             var mappedEntity = Mapper.Map(dto, entity);
 
             GenericRepository.Update(mappedEntity);
