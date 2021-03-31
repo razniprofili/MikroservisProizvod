@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public abstract class BasePagedSearchService<TEntity, TDto, TSearch> : BaseMapperService<TEntity,TDto>, ISearchService<TSearch>
+    public abstract class BasePagedSearchService<TEntity, TDto, TSearch> : BaseMapperCommand<TEntity,TDto>, ISearchCommand<TSearch>
         where TEntity : BaseEntity
         where TDto : BaseDto
         where TSearch : PagedSearch

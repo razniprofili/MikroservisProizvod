@@ -19,11 +19,11 @@ namespace MikroservisProizvod.API.ApiCore
         public static void SetUpApplication(this IServiceCollection services)
         {
             services.AddTransient<IGenericRepository<Proizvod>, ProizvodRepository>();
-            services.AddTransient<ISearchProizvodsService, SearchProizvodsService>();
-            services.AddTransient<IAddProzivodService, AddProizvodService>();
-            services.AddTransient<IUpdateProizvodService, UpdateProizvodService>();
-            services.AddTransient<IFindProizvodService, FindProizvodService>();
-            services.AddTransient<IDeleteProizvodService, DeleteProizvodService>();
+            services.AddTransient<ISearchProizvodsCommand, SearchProizvodsCommand>();
+            services.AddTransient<IAddProzivodCommand, AddProizvodCommand>();
+            services.AddTransient<IUpdateProizvodCommand, UpdateProizvodCommand>();
+            services.AddTransient<IFindProizvodCommand, FindProizvodCommand>();
+            services.AddTransient<IDeleteProizvodCommand, DeleteProizvodCommand>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)

@@ -12,19 +12,19 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseUpdateService<TEntity, TDto> : BaseMapperService<TEntity, TDto>, IUpdateService<TDto>
+    public class BaseUpdateService<TEntity, TDto> : BaseMapperCommand<TEntity, TDto>, IUpdateCommand<TDto>
         where TEntity : BaseEntity
         where TDto : BaseDto
     {
-        protected readonly IValidator<TDto> Validator;
+        protected readonly IValidator<TDto> _validator;
         public BaseUpdateService(IGenericRepository<TEntity> genericRepository, IMapper mapper, IValidator<TDto> validator) : base(genericRepository, mapper)
         {
-            Validator = validator;
+            _validator = validator;
         }
 
         public virtual TDto Update(TDto dto)
         {
-            var validationResult = Validator.Validate(dto);
+            var validationResult = _validator.Validate(dto);
 
             if (!validationResult.IsValid)
             {

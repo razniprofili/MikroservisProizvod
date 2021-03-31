@@ -19,32 +19,32 @@ namespace MikroservisProizvod.API.Controllers
     {
 
         [HttpGet]
-        public IActionResult SearchProizvod([FromQuery] ProizvodSearch search, [FromServices] ISearchProizvodsService service)
+        public IActionResult SearchProizvod([FromQuery] ProizvodSearch search, [FromServices] ISearchProizvodsCommand service)
         {
             return Ok(service.Search(search));
         }
 
         [HttpGet("{id:long}")]
-        public IActionResult FindProizvod(long id, [FromServices] IFindProizvodService service)
+        public IActionResult FindProizvod(long id, [FromServices] IFindProizvodCommand service)
         {
             return Ok(service.Find(id));
         }
 
         [HttpPut("{id:long}")]
-        public IActionResult UpdateProizvod(long id,[FromBody] ProizvodDto dto, [FromServices] IUpdateProizvodService service)
+        public IActionResult UpdateProizvod(long id,[FromBody] ProizvodDto dto, [FromServices] IUpdateProizvodCommand service)
         {
             dto.Id = id;
             return Ok(service.Update(dto));
         }
 
         [HttpPost]
-        public IActionResult AddProizvod([FromBody] ProizvodDto dto, [FromServices] IAddProzivodService service)
+        public IActionResult AddProizvod([FromBody] ProizvodDto dto, [FromServices] IAddProzivodCommand service)
         {
             return Ok(service.Add(dto));
         }
 
         [HttpDelete("{id:long}")]
-        public IActionResult DeleteProizvod(long id, [FromServices] IDeleteProizvodService service)
+        public IActionResult DeleteProizvod(long id, [FromServices] IDeleteProizvodCommand service)
         {
             service.Delete(id);
 

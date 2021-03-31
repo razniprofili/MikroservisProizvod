@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseDeleteService<TEntity> : BaseService<TEntity>, IDeleteService
+    public class BaseDeleteService<TEntity> : BaseCommand<TEntity>, IDeleteCommand
         where TEntity : BaseEntity
     {
         public BaseDeleteService(IGenericRepository<TEntity> genericRepository) : base(genericRepository)

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseFindService<TEntity, TDto> : BaseMapperService<TEntity, TDto>, IFindService<TDto>
+    public class BaseFindService<TEntity, TDto> : BaseMapperCommand<TEntity, TDto>, IFindCommand<TDto>
         where TEntity : BaseEntity
         where TDto : BaseDto
     {

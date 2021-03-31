@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.DefaultServices
 {
-    public interface IUpdateService<T>
+    public interface IAddCommand<T>
         where T : BaseDto
     {
-        T Update(T dto);
+        T Add(T dto);
     }
 }

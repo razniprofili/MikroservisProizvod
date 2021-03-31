@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.DefaultServices
 {
-    public interface ISearchService<TSearch> 
+    public interface ISearchCommand<TSearch> 
         where TSearch : PagedSearch
     {
         object Search(TSearch search);

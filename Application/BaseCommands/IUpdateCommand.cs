@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.DefaultServices
 {
-    public interface IFindService<TModel>
-        where TModel : BaseDto
+    public interface IUpdateCommand<T>
+        where T : BaseDto
     {
-        TModel Find(long id);
+        T Update(T dto);
     }
 }

@@ -8,23 +8,23 @@ using System.Text;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public abstract class BaseService<TEntity>
+    public abstract class BaseCommand<TEntity>
         where TEntity : BaseEntity
     {
         protected readonly IGenericRepository<TEntity> GenericRepository;
 
-        protected BaseService(IGenericRepository<TEntity> genericRepository)
+        protected BaseCommand(IGenericRepository<TEntity> genericRepository)
         {
             GenericRepository = genericRepository;
         }
     }
 
-    public abstract class BaseMapperService<TEntity, TDto> : BaseService<TEntity>
+    public abstract class BaseMapperCommand<TEntity, TDto> : BaseCommand<TEntity>
         where TEntity : BaseEntity
         where TDto : BaseDto
     {
         protected readonly IMapper Mapper;
-        protected BaseMapperService(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository)
+        protected BaseMapperCommand(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository)
         {
             Mapper = mapper;
         }

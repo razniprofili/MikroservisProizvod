@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseAddService<TEntity, TDto> : BaseMapperService<TEntity,TDto>,IAddService<TDto>
+    public class BaseAddService<TEntity, TDto> : BaseMapperCommand<TEntity,TDto>,IAddCommand<TDto>
         where TEntity : BaseEntity
         where TDto : BaseDto
     {

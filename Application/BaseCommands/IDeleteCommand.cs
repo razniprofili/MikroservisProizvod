@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.DefaultServices
 {
-    public interface IDeleteService
+    public interface IDeleteCommand
     {
         void Delete(long id);
     }

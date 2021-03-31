@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.IServices
 {
-    public interface ISearchProizvodsService : ISearchService<ProizvodSearch>
+    public interface IUpdateProizvodCommand : IUpdateCommand<ProizvodDto>
     {
     }
 }
