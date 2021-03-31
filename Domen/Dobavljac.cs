@@ -10,6 +10,8 @@ namespace Domen
 {
     public class Dobavljac : BaseEntity
     {
+        [Required]
+        public string Naziv { get; set; }
 
         [Required]
         public string PIB { get; set; }

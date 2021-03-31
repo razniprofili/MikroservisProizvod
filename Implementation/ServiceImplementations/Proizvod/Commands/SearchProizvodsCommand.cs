@@ -16,9 +16,17 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Ser
         {
         }
 
-        protected override Expression<Func<Domen.Proizvod, bool>> Expression(ProizvodSearch search)
+        protected override Expression<Func<Domen.Proizvod, bool>> SearchExpression(ProizvodSearch search)
         {
-            Expression<Func<Domen.Proizvod, bool>> expression = p => p.Cena.ToString().Contains(search.Keyword)
+            Expression<Func<Domen.Proizvod, bool>> expression;
+
+            if ( String.IsNullOrEmpty(search.Keyword)) // ako je keyword prazan, onda nemamo uslov za pretragu, vracamo sve
+            {
+                expression = p => true;
+                return expression;
+            }
+
+            expression = p => p.Cena.ToString().Contains(search.Keyword)
                     || p.Naziv.Contains(search.Keyword)
                     || p.Pdv.ToString().Contains(search.Keyword)
                     || p.Id.ToString().Contains(search.Keyword);

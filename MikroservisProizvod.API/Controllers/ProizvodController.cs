@@ -2,7 +2,6 @@
 using Common;
 using Microsoft.AspNetCore.Mvc;
 using MikroservisProizvod.API.Helpers;
-using MikroservisProizvod.API.Models;
 using MikroServisProizvod.Application.IServices;
 using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
 using System;

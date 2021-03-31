@@ -18,7 +18,6 @@ namespace Domen
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server = TMILOSEVIC-HP; Database = MikroservisProizvodDB; Trusted_Connection = True;");
             optionsBuilder.UseSqlServer("Server = localhost\\SQLEXPRESS; Database = MikroservisProizvodDB; Trusted_Connection = True;");
         }
 
@@ -94,7 +93,11 @@ namespace Domen
                     Naziv = "Komad"
 
                 },
-                new JedinicaMere{ Id = 2,Naziv = "Kilogram"},
+                new JedinicaMere
+                { 
+                    Id = 2,
+                    Naziv = "Kilogram"
+                },
                 new JedinicaMere
                 {
                     Id = 3,

@@ -11,7 +11,6 @@ namespace Domen
     {
         [Key]
         public long Id { get; set; }
-        [Required]
-        public string Naziv { get; set; }
+
     }
 }

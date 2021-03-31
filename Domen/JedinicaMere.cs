@@ -9,6 +9,7 @@ namespace Domen
 {
     public class JedinicaMere : BaseEntity
     {
-
+        [Required]
+        public string Naziv { get; set; }
     }
 }

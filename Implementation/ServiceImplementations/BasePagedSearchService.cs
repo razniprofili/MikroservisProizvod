@@ -29,11 +29,11 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
             if(IncludedProperties.Length > 0) 
             { 
-                entities = GenericRepository.Search(Expression(search), IncludedProperties);//"TipProizvoda,JedinicaMere,Dobavljaci"
+                entities = GenericRepository.Search(SearchExpression(search), IncludedProperties);//"TipProizvoda,JedinicaMere,Dobavljaci"
             }
             else
             {
-                entities = GenericRepository.Search(Expression(search));
+                entities = GenericRepository.Search(SearchExpression(search));
             }
 
             var totalCount = entities.Count();
@@ -61,6 +61,6 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         protected virtual string IncludedProperties => "";
 
-        protected abstract Expression<Func<TEntity, bool>> Expression(TSearch search);
+        protected abstract Expression<Func<TEntity, bool>> SearchExpression(TSearch search);
     }
 }

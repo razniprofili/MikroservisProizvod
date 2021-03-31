@@ -1,4 +1,4 @@
-﻿using Common.Exceptions;
+﻿
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
@@ -42,17 +42,30 @@ namespace MikroservisProizvod.API.Middleware
         {
             var code = HttpStatusCode.InternalServerError; // 500
 
-            if (ex is ValidationException)
-                code = HttpStatusCode.BadRequest; //400
-
             if (ex is FluentValidation.ValidationException)
                 code = HttpStatusCode.BadRequest; //400
 
-            var result = JsonConvert.SerializeObject(
-                new
-                {
-                    erroe = ex.Message
-                });
+            string result;
+
+            if(code == HttpStatusCode.InternalServerError)
+            {
+                var errorMessage = ex.Message; // ovo bi trebalo logovati, a korisniku prikazati gresku ispod
+
+                 result = JsonConvert.SerializeObject(
+                    new
+                    {
+                        error = "Desila se neocekivana greska na serveru."
+                    });
+            } 
+            else
+            {
+                result = JsonConvert.SerializeObject(
+                   new
+                   {
+                       error = ex.Message
+                   });
+            }
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
 
