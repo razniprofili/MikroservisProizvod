@@ -10,5 +10,7 @@ namespace Domen
 {
     public class TipProizvoda : BaseEntity
     {
+        [Required]
+        public string Naziv { get; set; }
     }
 }

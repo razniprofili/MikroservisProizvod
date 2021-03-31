@@ -7,6 +7,9 @@ namespace Domen
     public class Proizvod : BaseEntity
     {
         [Required]
+        public string Naziv { get; set; }
+
+        [Required]
         public double Cena { get; set; }
         [Required]
         public double Pdv { get; set; }
