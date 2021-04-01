@@ -13,42 +13,14 @@ namespace MikroServisProizvod.Implementation.Profiles
 {
     public class ProizvodProfile : Profile
     {
-        public ProizvodProfile(Context context)
+        public ProizvodProfile()
         {
             CreateMap<Proizvod, ReadProizvodDto>()
-                .ForMember(x => x.Dobavljaci, x => x.MapFrom(z => context.Proizvod
-                        .Include(inc => inc.Dobavljaci)
-                                .FirstOrDefault(y => y.Id == z.Id).Dobavljaci
-                                        .Select(res => new OnlyNazivDto { Naziv = res.Naziv, Id = res.Id })))
-                .ForMember(x => x.JedinicaMere, x => x.MapFrom((x,y) => {
-                    var jedinica = context.Proizvod.Include(inc => inc.JedinicaMere)
-                                .FirstOrDefault(y => y.Id == x.Id)
-                                .JedinicaMere;
-
-                    return new OnlyNazivDto
-                    {
-                        Id = jedinica.Id,
-                        Naziv = jedinica.Naziv
-                    };
-                }))
-                .ForMember(x => x.TipProizvoda, x => x.MapFrom((x,y) =>
-                {
-                    var tipProizvoda = context.Proizvod.Include(inc => inc.TipProizvoda)
-                                .FirstOrDefault(y => y.Id == x.Id)
-                                .TipProizvoda;
-
-                    return new OnlyNazivDto
-                    {
-                        Id = tipProizvoda.Id,
-                        Naziv = tipProizvoda.Naziv
-                    };
-                }));
-                                        
-                
+                .ForMember(x => x.Dobavljaci, x => x.MapFrom(z => z.Dobavljaci.Select(y => new DobavljacDto { Naziv = y.Dobavljac.Naziv, Id = y.DobavljacId })))
+                .ForMember(x => x.TipProizvoda, x => x.MapFrom(z => new TipProizvodaDto { Naziv = z.Naziv, Id = z.TipProizvodaId }))
+                .ForMember(x => x.JedinicaMere, x => x.MapFrom(z => new JedinicaMereDto { Naziv = z.Naziv, Id = z.JedinicaMereId }));
             CreateMap<ProizvodDto, Proizvod>()
-                .ForMember(x => x.Dobavljaci, x => x.Ignore())
-                .ForMember(x => x.JedinicaMere, x => x.Ignore())
-                .ForMember(x => x.TipProizvoda, x => x.Ignore());
+                .ForMember(x => x.Dobavljaci, x => x.MapFrom(y => y.DobavljaciIds.Select(z => new ProizvodDobavljac { DobavljacId = z })));
         }
     }
 }

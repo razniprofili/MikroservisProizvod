@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
 {
-    public class FindProizvodCommand : BaseFindService<Domen.Proizvod, ProizvodDto>, IFindProizvodCommand
+    public class FindProizvodCommand : BaseFindCommand<Domen.Proizvod, ProizvodDto>, IFindProizvodCommand
     {
         public FindProizvodCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {

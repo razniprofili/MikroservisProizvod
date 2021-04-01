@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Application.SeparatedModels
 {
-    public class OnlyNazivDto : BaseDto
+    public abstract class SeparatedModelDto : BaseDto
     {
         public string Naziv { get; set; }
     }

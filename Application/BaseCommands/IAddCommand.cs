@@ -1,13 +1,14 @@
-﻿using MikroServisProizvod.Application.BaseDtos;
+﻿using MikroServisProizvod.Application.BaseCommands;
+using MikroServisProizvod.Application.BaseDtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MikroServisProizvod.Application.DefaultServices
 {
-    public interface IAddCommand<T>
-        where T : BaseDto
+    public interface IAddCommand<TDto, TRes> : ICommand<TDto, TRes>
+        where TDto : BaseDto
+        where TRes : BaseDto
     {
-        T Add(T dto);
     }
 }

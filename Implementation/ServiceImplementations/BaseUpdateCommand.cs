@@ -12,21 +12,21 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseUpdateService<TEntity, TDto> : BaseMapperCommand<TEntity, TDto>, IUpdateCommand<TDto>
+    public class BaseUpdateCommand<TEntity, TDto> : BaseMapperCommand<TEntity, TDto>, IUpdateCommand<TDto,TDto>
         where TEntity : BaseEntity
         where TDto : BaseDto
     {
         protected readonly IValidator<TDto> _validator;
-        public BaseUpdateService(IGenericRepository<TEntity> genericRepository, IMapper mapper, IValidator<TDto> validator) : base(genericRepository, mapper)
+        public BaseUpdateCommand(IGenericRepository<TEntity> genericRepository, IMapper mapper, IValidator<TDto> validator) : base(genericRepository, mapper)
         {
             _validator = validator;
         }
 
-        public virtual TDto Update(TDto dto)
+        public TDto Execute(TDto dto)
         {
             var entity = GenericRepository.FirstOrDefault(x => x.Id == dto.Id);
 
-            if(entity is null) // prvo proverimo da li entitet za azuriranje postoji u bazi, pa onda sve ostalo
+            if (entity is null) // prvo proverimo da li entitet za azuriranje postoji u bazi, pa onda sve ostalo
             {
                 throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()} poslat na azuriranje.");
             }
@@ -37,7 +37,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
             {
                 throw new ValidationException(validationResult.Errors.AsEnumerable());
             }
-            
+
             var mappedEntity = Mapper.Map(dto, entity);
 
             GenericRepository.Update(mappedEntity);

@@ -5,8 +5,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.SeparatedModels
 {
-    public class TipProizvodaDto : BaseDto
+    public class TipProizvodaDto : SeparatedModelDto
     {
-        public string Naziv { get; set; }
     }
 }

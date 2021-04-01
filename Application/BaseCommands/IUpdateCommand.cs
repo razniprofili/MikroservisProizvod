@@ -1,13 +1,14 @@
-﻿using MikroServisProizvod.Application.BaseDtos;
+﻿using MikroServisProizvod.Application.BaseCommands;
+using MikroServisProizvod.Application.BaseDtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MikroServisProizvod.Application.DefaultServices
 {
-    public interface IUpdateCommand<T>
-        where T : BaseDto
+    public interface IUpdateCommand<TReq,TRes> : ICommand<TReq, TRes>
+        where TReq : BaseDto
+        where TRes : BaseDto
     {
-        T Update(T dto);
     }
 }

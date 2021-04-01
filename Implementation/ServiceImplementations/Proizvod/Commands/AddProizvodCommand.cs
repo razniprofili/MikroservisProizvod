@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
 {
-    public class AddProizvodCommand : BaseAddService<Domen.Proizvod, ProizvodDto>, IAddProzivodCommand
+    public class AddProizvodCommand : BaseAddCommand<Domen.Proizvod, ProizvodDto>, IAddProzivodCommand
     {
         public AddProizvodCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper, IValidator<ProizvodDto> validator) : base(genericRepository, mapper, validator)
         {

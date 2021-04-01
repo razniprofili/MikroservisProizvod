@@ -22,7 +22,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod
                     .WithMessage("Jedinica mere mora postojati u bazi")
                 .Must(x => context.TipProizvoda.FirstOrDefault(z => z.Id == x.TipProizvodaId) != null)
                     .WithMessage("Tip proizvoda mora postojati u bazi")
-                .Must( x => context.Dobavljac.Select( d => d.Id).ToList().Intersect(x.Dobavljaci.Select(d => d.Id)).Any())
+                .Must( x => context.Dobavljac.Select( d => d.Id).ToList().Intersect(x.DobavljaciIds).Any())
                     .WithMessage("Dobavljac mora postojati u bazi")
                 .Must(x => x.Pdv >= 0)
                     .WithMessage("Pdv ne sme biti negativan broj")

@@ -21,8 +21,8 @@ namespace MikroServisProizvod.Application.IServices.ProizvodServices.Models
         public string Naziv { get; set; }
         public double Cena { get; set; }
         public double Pdv { get; set; }
-        public OnlyNazivDto TipProizvoda { get; set; }
-        public OnlyNazivDto JedinicaMere { get; set; }
-        public List<OnlyNazivDto> Dobavljaci { get; set; }
+        public TipProizvodaDto TipProizvoda { get; set; }
+        public JedinicaMereDto JedinicaMere { get; set; }
+        public List<DobavljacDto> Dobavljaci { get; set; }
     }
 }

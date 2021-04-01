@@ -1,6 +1,7 @@
 ﻿using Data;
 using Domen;
 using FluentValidation;
+using MikroServisProizvod.Application.BaseModels;
 using MikroServisProizvod.Application.DefaultServices;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseDeleteService<TEntity> : BaseCommand<TEntity>, IDeleteCommand
+    public class BaseDeleteCommand<TEntity> : BaseCommand<TEntity>, IDeleteCommand
         where TEntity : BaseEntity
     {
-        public BaseDeleteService(IGenericRepository<TEntity> genericRepository) : base(genericRepository)
+        public BaseDeleteCommand(IGenericRepository<TEntity> genericRepository) : base(genericRepository)
         {
         }
 
-        public void Delete(long id)
+        public Empty Execute(long id)
         {
             var entity = GenericRepository.FirstOrDefault(x => x.Id == id);
 
@@ -27,6 +28,8 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
             }
 
             GenericRepository.Delete(id);
+
+            return new Empty();
         }
     }
 }

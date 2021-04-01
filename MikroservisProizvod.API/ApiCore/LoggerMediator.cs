@@ -1,4 +1,5 @@
 ﻿using Domen;
+using MikroServisProizvod.Application.BaseCommands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,16 @@ namespace MikroservisProizvod.API.ApiCore
         {
             _context = context;
         }
+        public TRes HandleProccessExecution<TReq,TRes>(ICommand<TReq, TRes> command, TReq req)
+        {
+            //writingHandling
 
+            var result = command.Execute(req);
+
+            //writingExec
+
+            return result;
+        }
     }
 
     public class LoggerWrapper
