@@ -12,22 +12,21 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseFindService<TEntity, TDto> : BaseMapperService<TEntity, TDto>, IFindService<TDto>
+    public class BaseFindCommand<TEntity, TDto> : BaseMapperCommand<TEntity, TDto>, IFindCommand<TDto>
         where TEntity : BaseEntity
         where TDto : BaseDto
     {
-        public BaseFindService(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository, mapper)
+        public BaseFindCommand(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {
         }
 
-        public TDto Find(long id)
+        public TDto Execute(long id)
         {
-
             TEntity entity = IncludedEntities.Length > 0
                 ? GenericRepository.FirstOrDefault(x => x.Id == id, IncludedEntities)
                 : GenericRepository.FirstOrDefault(x => x.Id == id);
-            
-            if (entity == null) 
+
+            if (entity == null)
             {
                 //return null;
                 throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()}.");
@@ -37,6 +36,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
             return parsedDto;
         }
+
         public virtual string IncludedEntities => "";
     }
 }

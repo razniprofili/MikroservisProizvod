@@ -29,6 +29,8 @@ namespace Domen
                 entity.HasOne(p => p.JedinicaMere).WithMany();
             });
 
+            modelBuilder.Entity<ProizvodDobavljac>(p => p.HasKey(x => new { x.DobavljacId, x.ProizvodId  }));
+
             modelBuilder.Entity<Dobavljac>().HasData(new Dobavljac[]
             {
                 new Dobavljac

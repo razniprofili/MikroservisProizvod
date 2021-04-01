@@ -20,7 +20,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
     {
         private Mock<IGenericRepository<Proizvod>> _mockGenericRepository;
         private Mock<IMapper> _mockMapper;
-        private ISearchProizvodsService _searchProizvodService;
+        private ISearchProizvodsCommand _searchProizvodCommand;
         private List<Proizvod> proizvodi;
         private List<ProizvodDto> proizvodiDto;
 
@@ -30,7 +30,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
             _mockGenericRepository = new Mock<IGenericRepository<Proizvod>>();
             _mockMapper = new Mock<IMapper>();
 
-            _searchProizvodService = new SearchProizvodsService(_mockGenericRepository.Object, _mockMapper.Object);
+            _searchProizvodCommand = new SearchProizvodsCommand(_mockGenericRepository.Object, _mockMapper.Object);
 
             proizvodi = new List<Proizvod>
             {
@@ -50,9 +50,17 @@ namespace MikroservisProizvod.Test.ProizvodTests
                         Id = 1,
                         Naziv = "Tip proizvoda 1"
                     },
-                    Dobavljaci = new List<Dobavljac>
+                    Dobavljaci = new List<ProizvodDobavljac>
                     {
-                        new Dobavljac{Id = 1, Naziv = "Dobavljac1"}
+                        new ProizvodDobavljac{
+                            Dobavljac = new Dobavljac
+                            {
+                                Id = 1,
+                                PIB = "123",
+                                Napomena = "Napomena",
+                                Naziv = "Dobavljac 1"
+                            }
+                        }
                     }
                 },
                 new Proizvod
@@ -66,14 +74,17 @@ namespace MikroservisProizvod.Test.ProizvodTests
                         Id = 1,
                         Naziv = "Jedinica mere 1"
                     },
-                    TipProizvoda = new TipProizvoda
+                    Dobavljaci = new List<ProizvodDobavljac>
                     {
-                        Id = 1,
-                        Naziv = "Tip proizvoda 1"
-                    },
-                    Dobavljaci = new List<Dobavljac>
-                    {
-                        new Dobavljac{Id = 1, Naziv = "Dobavljac1"}
+                        new ProizvodDobavljac{
+                            Dobavljac = new Dobavljac
+                            {
+                                Id = 1,
+                                PIB = "123",
+                                Napomena = "Napomena",
+                                Naziv = "Dobavljac 1"
+                            }
+                        }
                     }
                 }
             };
@@ -86,20 +97,9 @@ namespace MikroservisProizvod.Test.ProizvodTests
                     Naziv = "Proizvod 1",
                     Cena = 11.1,
                     Pdv = 0.11,
-                    JedinicaMere = new JedinicaMereDto
-                    {
-                        Id = 1,
-                        Naziv = "Jedinica mere 1"
-                    },
-                    TipProizvoda = new TipProizvodaDto
-                    {
-                        Id = 1,
-                        Naziv = "Tip proizvoda 1"
-                    },
-                    Dobavljaci = new List<DobavljacDto>
-                    {
-                        new DobavljacDto{Id = 1, Naziv = "Dobavljac1"}
-                    }
+                    JedinicaMereId = 1,
+                    TipProizvodaId = 1,
+                    DobavljaciIds = new List<long>() { 1 }
                 },
                 new ProizvodDto
                 {
@@ -107,20 +107,9 @@ namespace MikroservisProizvod.Test.ProizvodTests
                     Naziv = "Proizvod 2",
                     Cena = 22.2,
                     Pdv = 0.22,
-                    JedinicaMere = new JedinicaMereDto
-                    {
-                        Id = 1,
-                        Naziv = "Jedinica mere 1"
-                    },
-                    TipProizvoda = new TipProizvodaDto
-                    {
-                        Id = 1,
-                        Naziv = "Tip proizvoda 1"
-                    },
-                    Dobavljaci = new List<DobavljacDto>
-                    {
-                        new DobavljacDto{Id = 1, Naziv = "Dobavljac1"}
-                    }
+                    JedinicaMereId = 1,
+                    TipProizvodaId = 1,
+                    DobavljaciIds = new List<long>(){ 1 }
                 }
             };
         }
@@ -138,7 +127,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 .Returns(proizvodiDto);
 
             // izvrsenje
-            var res = _searchProizvodService.Search(search) as List<ProizvodDto>;
+            var res = _searchProizvodCommand.Execute(search) as List<ProizvodDto>;
 
             // provera
             Assert.IsNotNull(res);
@@ -159,7 +148,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 .Returns(proizvodiDto);
 
             // izvrsenje
-            var res = _searchProizvodService.Search(search) as PagedResponse<ProizvodDto>;
+            var res = _searchProizvodCommand.Execute(search) as PagedResponse<ProizvodDto>;
 
             // provera
             Assert.IsNotNull(res);

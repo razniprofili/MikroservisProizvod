@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
 {
-    public class UpdateProizvodService : BaseUpdateService<Domen.Proizvod, ProizvodDto>, IUpdateProizvodService
+    public class UpdateProizvodCommand : BaseUpdateCommand<Domen.Proizvod, ProizvodDto>, IUpdateProizvodCommand
     {
-        public UpdateProizvodService(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper, IValidator<ProizvodDto> validator) : base(genericRepository, mapper, validator)
+        public UpdateProizvodCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper, IValidator<ProizvodDto> validator) : base(genericRepository, mapper, validator)
         {
         }
     }

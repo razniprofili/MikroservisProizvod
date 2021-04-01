@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public class BaseAddService<TEntity, TDto> : BaseMapperService<TEntity,TDto>,IAddService<TDto>
+    public class BaseAddCommand<TEntity, TDto> : BaseMapperCommand<TEntity,TDto>,IAddCommand<TDto,TDto>
         where TEntity : BaseEntity
         where TDto : BaseDto
     {
         private readonly IValidator<TDto> Validator;
-        public BaseAddService(IGenericRepository<TEntity> genericRepository, IMapper mapper, IValidator<TDto> validator) : base(genericRepository, mapper)
+        public BaseAddCommand(IGenericRepository<TEntity> genericRepository, IMapper mapper, IValidator<TDto> validator) : base(genericRepository, mapper)
         {
             Validator = validator;
         }
 
-        public virtual TDto Add(TDto dto)
+        public virtual TDto Execute(TDto dto)
         {
             var validationResult = Validator.Validate(dto);
 

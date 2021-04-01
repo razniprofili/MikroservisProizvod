@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
 {
-    public class DeleteProizvodService : BaseDeleteService<Domen.Proizvod>, IDeleteProizvodService
+    public class DeleteProizvodCommand : BaseDeleteCommand<Domen.Proizvod>, IDeleteProizvodCommand
     {
-        public DeleteProizvodService(IGenericRepository<Domen.Proizvod> genericRepository) : base(genericRepository)
+        public DeleteProizvodCommand(IGenericRepository<Domen.Proizvod> genericRepository) : base(genericRepository)
         {
         }
     }

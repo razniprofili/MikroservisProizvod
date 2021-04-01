@@ -16,8 +16,8 @@ namespace Domen
         [Required]
         public string PIB { get; set; }
         
-        public string Napomena { get; set; } // moze null?
+        public string Napomena { get; set; }
 
-        public List<Proizvod> Proizvodi { get; set; }
+        public virtual List<ProizvodDobavljac> Proizvodi { get; set; }
     }
 }

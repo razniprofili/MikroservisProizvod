@@ -10,9 +10,9 @@ using System.Text;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
 {
-    public class SearchProizvodsService : BasePagedSearchService<Domen.Proizvod, ProizvodDto, ProizvodSearch>, ISearchProizvodsService
+    public class SearchProizvodsCommand : BasePagedSearchService<Domen.Proizvod, ProizvodDto, ProizvodSearch>, ISearchProizvodsCommand
     {
-        public SearchProizvodsService(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper) : base(genericRepository, mapper)
+        public SearchProizvodsCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {
         }
 

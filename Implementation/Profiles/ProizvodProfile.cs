@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Domen;
+using Microsoft.EntityFrameworkCore;
 using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
+using MikroServisProizvod.Application.SeparatedModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +15,12 @@ namespace MikroServisProizvod.Implementation.Profiles
     {
         public ProizvodProfile()
         {
-            CreateMap<Proizvod, ProizvodDto>();
+            CreateMap<Proizvod, ReadProizvodDto>()
+                .ForMember(x => x.Dobavljaci, x => x.MapFrom(z => z.Dobavljaci.Select(y => new DobavljacDto { Naziv = y.Dobavljac.Naziv, Id = y.DobavljacId })))
+                .ForMember(x => x.TipProizvoda, x => x.MapFrom(z => new TipProizvodaDto { Naziv = z.Naziv, Id = z.TipProizvodaId }))
+                .ForMember(x => x.JedinicaMere, x => x.MapFrom(z => new JedinicaMereDto { Naziv = z.Naziv, Id = z.JedinicaMereId }));
             CreateMap<ProizvodDto, Proizvod>()
-                .ForMember(x => x.Dobavljaci, x => x.Ignore())
-                .ForMember(x => x.JedinicaMere, x => x.Ignore())
-                .ForMember(x => x.TipProizvoda, x => x.Ignore());
+                .ForMember(x => x.Dobavljaci, x => x.MapFrom(y => y.DobavljaciIds.Select(z => new ProizvodDobavljac { DobavljacId = z })));
         }
     }
 }

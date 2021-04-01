@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Common;
 using Microsoft.AspNetCore.Mvc;
+using MikroservisProizvod.API.ApiCore;
 using MikroservisProizvod.API.Helpers;
 using MikroServisProizvod.Application.IServices;
 using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
@@ -16,36 +17,41 @@ namespace MikroservisProizvod.API.Controllers
     [Route("api/Proizvod")]
     public class ProizvodController : Controller
     {
+        private readonly LoggerMediator _loggerMediator; 
+        public ProizvodController(LoggerMediator loggerMediator)
+        {
+            _loggerMediator = loggerMediator;
+        }
 
         [HttpGet]
-        public IActionResult SearchProizvod([FromQuery] ProizvodSearch search, [FromServices] ISearchProizvodsService service)
+        public IActionResult SearchProizvod([FromQuery] ProizvodSearch search, [FromServices] ISearchProizvodsCommand command)
         {
-            return Ok(service.Search(search));
+            return Ok(_loggerMediator.HandleProccessExecution(command,search));
         }
 
         [HttpGet("{id:long}")]
-        public IActionResult FindProizvod(long id, [FromServices] IFindProizvodService service)
+        public IActionResult FindProizvod(long id, [FromServices] IFindProizvodCommand command)
         {
-            return Ok(service.Find(id));
+            return Ok(_loggerMediator.HandleProccessExecution(command, id));
         }
 
         [HttpPut("{id:long}")]
-        public IActionResult UpdateProizvod(long id,[FromBody] ProizvodDto dto, [FromServices] IUpdateProizvodService service)
+        public IActionResult UpdateProizvod(long id, [FromBody] ProizvodDto dto, [FromServices] IUpdateProizvodCommand command)
         {
             dto.Id = id;
-            return Ok(service.Update(dto));
+            return Ok(_loggerMediator.HandleProccessExecution(command, dto));
         }
 
         [HttpPost]
-        public IActionResult AddProizvod([FromBody] ProizvodDto dto, [FromServices] IAddProzivodService service)
+        public IActionResult AddProizvod([FromBody] ProizvodDto dto, [FromServices] IAddProzivodCommand command)
         {
-            return Ok(service.Add(dto));
+            return Ok(_loggerMediator.HandleProccessExecution(command,dto));
         }
 
         [HttpDelete("{id:long}")]
-        public IActionResult DeleteProizvod(long id, [FromServices] IDeleteProizvodService service)
+        public IActionResult DeleteProizvod(long id, [FromServices] IDeleteProizvodCommand command)
         {
-            service.Delete(id);
+            _loggerMediator.HandleProccessExecution(command, id);
 
             return Ok();
         }

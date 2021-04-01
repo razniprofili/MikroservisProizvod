@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Data;
+using Domen;
+using FluentValidation;
+using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.IServices;
 using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
 using System;
@@ -10,12 +13,10 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
 {
-    public class FindProizvodService : BaseFindService<Domen.Proizvod, ProizvodDto>, IFindProizvodService
+    public class AddProizvodCommand : BaseAddCommand<Domen.Proizvod, ProizvodDto>, IAddProzivodCommand
     {
-        public FindProizvodService(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper) : base(genericRepository, mapper)
+        public AddProizvodCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper, IValidator<ProizvodDto> validator) : base(genericRepository, mapper, validator)
         {
         }
-
-        public override string IncludedEntities => "JedinicaMere,TipProizvoda,Dobavljaci";
     }
 }

@@ -1,13 +1,13 @@
-﻿using MikroServisProizvod.Application.BaseDtos;
+﻿using MikroServisProizvod.Application.BaseCommands;
+using MikroServisProizvod.Application.BaseDtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MikroServisProizvod.Application.DefaultServices
 {
-    public interface IFindService<TModel>
+    public interface IFindCommand<TModel> : ICommand<long,TModel> 
         where TModel : BaseDto
     {
-        TModel Find(long id);
     }
 }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public abstract class BasePagedSearchService<TEntity, TDto, TSearch> : BaseMapperService<TEntity,TDto>, ISearchService<TSearch>
+    public abstract class BasePagedSearchService<TEntity, TDto, TSearch> : BaseMapperCommand<TEntity,TDto>, ISearchCommand<TSearch>
         where TEntity : BaseEntity
         where TDto : BaseDto
         where TSearch : PagedSearch
@@ -23,12 +23,16 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
         {
         }
 
-        public virtual object Search(TSearch search)
+        protected virtual string IncludedProperties => "";
+
+        protected abstract Expression<Func<TEntity, bool>> SearchExpression(TSearch search);
+
+        public object Execute(TSearch search)
         {
             IQueryable<TEntity> entities;
 
-            if(IncludedProperties.Length > 0) 
-            { 
+            if (IncludedProperties.Length > 0)
+            {
                 entities = GenericRepository.Search(SearchExpression(search), IncludedProperties);//"TipProizvoda,JedinicaMere,Dobavljaci"
             }
             else
@@ -54,13 +58,9 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
                 CurrentPage = search.PageNumber,
                 Data = parsedDtos,
                 PageSize = search.PageSize,
-                TotalPages = (int)Math.Ceiling((decimal)totalCount/search.PageSize),
+                TotalPages = (int)Math.Ceiling((decimal)totalCount / search.PageSize),
                 TotalCount = totalCount
             };
         }
-
-        protected virtual string IncludedProperties => "";
-
-        protected abstract Expression<Func<TEntity, bool>> SearchExpression(TSearch search);
     }
 }
