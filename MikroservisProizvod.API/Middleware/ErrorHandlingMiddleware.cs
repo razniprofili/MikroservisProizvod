@@ -1,4 +1,5 @@
 ﻿
+using Common.Logger;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
@@ -14,13 +15,15 @@ namespace MikroservisProizvod.API.Middleware
         #region Fields
 
         private RequestDelegate _next;
+        private ITextFileAccessor _textFileAccessor;
 
         #endregion
 
         #region Constructor
-        public ErrorHandlingMiddleware(RequestDelegate next)
+        public ErrorHandlingMiddleware(RequestDelegate next, ITextFileAccessor accessor)
         {
             _next = next;
+            _textFileAccessor = accessor;
         }
         #endregion
 
@@ -38,7 +41,7 @@ namespace MikroservisProizvod.API.Middleware
             }
         }
 
-        public static Task HandleExceptionAsync(HttpContext context, Exception ex)
+        private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             var code = HttpStatusCode.InternalServerError; // 500
 
@@ -68,6 +71,8 @@ namespace MikroservisProizvod.API.Middleware
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
+
+            _textFileAccessor.WriteNewLine("Desila se neocekivana greska na serveru, Greska: " + ex.Message);
 
             return context.Response.WriteAsync(result);
 

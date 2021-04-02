@@ -5,6 +5,7 @@ using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.BaseModels;
 using MikroServisProizvod.Application.DefaultServices;
 using MikroServisProizvod.Application.IServices;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,9 @@ namespace MikroservisProizvod.API.ApiCore
     public class LoggerMediator
     {
         private readonly ITextFileAccessor _fileAccessor;
-        private readonly TextObjectAdapter _textObjectAdapter;
-        public LoggerMediator(ITextFileAccessor textFileAccessor, TextObjectAdapter textAdapter)
+        public LoggerMediator(ITextFileAccessor textFileAccessor)
         {
             _fileAccessor = textFileAccessor;
-            _textObjectAdapter = textAdapter;
         }
         public TRes HandleProccessExecution<TReq,TRes>(ICommand<TReq, TRes> command, TReq req)
         {
@@ -32,7 +31,7 @@ namespace MikroservisProizvod.API.ApiCore
             return result;
         }
 
-        public string GetRequestText<TReq, TRes>(ICommand<TReq, TRes> command, TReq req) => $"{DateTime.Now} : Korisnik izvrsava komandu {command.GetType().Name} sa podacima: {_textObjectAdapter.GenerateString(req)};";
-        public string GetResultText<TReq, TRes>(ICommand<TReq, TRes> command, TRes result) => $"{DateTime.Now} : Korisnik je izvrsio komandu {command.GetType().Name}, server je odgovorio: {_textObjectAdapter.GenerateString(result)};";
+        public string GetRequestText<TReq, TRes>(ICommand<TReq, TRes> command, TReq req) => $"{DateTime.Now} : Korisnik izvrsava komandu {command.GetType().Name} sa podacima: {JsonConvert.SerializeObject(req)};";
+        public string GetResultText<TReq, TRes>(ICommand<TReq, TRes> command, TRes result) => $"{DateTime.Now} : Korisnik je izvrsio komandu {command.GetType().Name}, server je odgovorio: {JsonConvert.SerializeObject(result)};";
     }
 }

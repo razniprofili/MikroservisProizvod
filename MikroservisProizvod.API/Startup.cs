@@ -78,8 +78,6 @@ namespace MikroservisProizvod.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProizvodAPI");
 
             });
-
-
         }
     }
 }
