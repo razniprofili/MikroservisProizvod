@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domen.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210331234420_added class between Dobavljac and Proizvod")]
-    partial class addedclassbetweenDobavljacandProizvod
+    [Migration("20210402144719_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -12,9 +12,9 @@ namespace Domen.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PIB = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Napomena = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Napomena = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,11 +53,11 @@ namespace Domen.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cena = table.Column<double>(type: "float", nullable: false),
                     Pdv = table.Column<double>(type: "float", nullable: false),
                     TipProizvodaId = table.Column<long>(type: "bigint", nullable: false),
-                    JedinicaMereId = table.Column<long>(type: "bigint", nullable: false),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    JedinicaMereId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,24 +77,24 @@ namespace Domen.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DobavljacProizvod",
+                name: "ProizvodDobavljac",
                 columns: table => new
                 {
-                    DobavljaciId = table.Column<long>(type: "bigint", nullable: false),
-                    ProizvodiId = table.Column<long>(type: "bigint", nullable: false)
+                    ProizvodId = table.Column<long>(type: "bigint", nullable: false),
+                    DobavljacId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DobavljacProizvod", x => new { x.DobavljaciId, x.ProizvodiId });
+                    table.PrimaryKey("PK_ProizvodDobavljac", x => new { x.DobavljacId, x.ProizvodId });
                     table.ForeignKey(
-                        name: "FK_DobavljacProizvod_Dobavljac_DobavljaciId",
-                        column: x => x.DobavljaciId,
+                        name: "FK_ProizvodDobavljac_Dobavljac_DobavljacId",
+                        column: x => x.DobavljacId,
                         principalTable: "Dobavljac",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DobavljacProizvod_Proizvod_ProizvodiId",
-                        column: x => x.ProizvodiId,
+                        name: "FK_ProizvodDobavljac_Proizvod_ProizvodId",
+                        column: x => x.ProizvodId,
                         principalTable: "Proizvod",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -133,11 +133,6 @@ namespace Domen.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DobavljacProizvod_ProizvodiId",
-                table: "DobavljacProizvod",
-                column: "ProizvodiId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Proizvod_JedinicaMereId",
                 table: "Proizvod",
                 column: "JedinicaMereId");
@@ -146,12 +141,17 @@ namespace Domen.Migrations
                 name: "IX_Proizvod_TipProizvodaId",
                 table: "Proizvod",
                 column: "TipProizvodaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProizvodDobavljac_ProizvodId",
+                table: "ProizvodDobavljac",
+                column: "ProizvodId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DobavljacProizvod");
+                name: "ProizvodDobavljac");
 
             migrationBuilder.DropTable(
                 name: "Dobavljac");

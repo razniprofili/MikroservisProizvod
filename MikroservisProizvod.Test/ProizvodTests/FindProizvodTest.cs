@@ -16,18 +16,15 @@ namespace MikroservisProizvod.Test.ProizvodTests
     {
         private Mock<IGenericRepository<Proizvod>> _mockGenericRepository;
         private Mock<IMapper> _mockMapper;
-        //private IFindService<ProizvodDto> _findService;
         private IFindProizvodCommand _findProizvodService;
         private Proizvod proizvod;
-        private ProizvodDto proizvodDto;
+        private ReadProizvodDto proizvodDto;
 
         [SetUp]
         public void Setup()
         {
             _mockGenericRepository = new Mock<IGenericRepository<Proizvod>>();
             _mockMapper = new Mock<IMapper>();
-
-            //_findService = new BaseFindService<Proizvod, ProizvodDto>(_mockGenericRepository.Object, _mockMapper.Object);
             _findProizvodService = new FindProizvodCommand(_mockGenericRepository.Object, _mockMapper.Object);
 
             proizvod = new Proizvod
@@ -60,15 +57,30 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 }
             };
 
-            proizvodDto = new ProizvodDto
+            proizvodDto = new ReadProizvodDto
             {
                 Id = 1,
                 Naziv = "Proizvod 1",
                 Cena = 11.1,
                 Pdv = 0.11,
-                JedinicaMereId = 1,
-                TipProizvodaId = 1,
-                Dobavljaci = new List<long>() { 1 }
+                JedinicaMere = new JedinicaMereDto
+                {
+                    Id = 1,
+                    Naziv = "Jedinica mere 1"
+                },
+                TipProizvoda = new TipProizvodaDto
+                {
+                    Id = 1,
+                    Naziv = "Tip proizvoda 1"
+                },
+                Dobavljaci = new List<DobavljacDto>
+                    {
+                        new DobavljacDto
+                        {
+                            Id = 1,
+                            Naziv = "Dobavljac 1"
+                        }
+                    }
             };
         }
 
@@ -78,9 +90,9 @@ namespace MikroservisProizvod.Test.ProizvodTests
             // priprema
             long id = 1;
 
-            _mockGenericRepository.Setup(gr => gr.FirstOrDefault(p => p.Id == id, "JedinicaMere,TipProizvoda,Dobavljaci"))
+            _mockGenericRepository.Setup(gr => gr.FirstOrDefault(p => p.Id == id, "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac"))
                 .Returns(proizvod);
-            _mockMapper.Setup(m => m.Map<ProizvodDto>(proizvod))
+            _mockMapper.Setup(m => m.Map<ReadProizvodDto>(proizvod))
                 .Returns(proizvodDto);
 
             // izvrsenje
@@ -95,7 +107,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
         {
             long id = 11;
 
-            _mockGenericRepository.Setup(gr => gr.FirstOrDefault(p => p.Id == id, "JedinicaMere,TipProizvoda,Dobavljaci"))
+            _mockGenericRepository.Setup(gr => gr.FirstOrDefault(p => p.Id == id, "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac"))
                 .Returns((Proizvod)null);
 
             Exception ex = Assert.Throws<ValidationException>(delegate { _findProizvodService.Execute(id); });
