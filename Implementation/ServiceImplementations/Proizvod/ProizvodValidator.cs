@@ -1,6 +1,6 @@
 ﻿using Domen;
 using FluentValidation;
-using MikroServisProizvod.Application.IServices.Commands.Models;
+using MikroServisProizvod.Application.ICommands.Commands.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

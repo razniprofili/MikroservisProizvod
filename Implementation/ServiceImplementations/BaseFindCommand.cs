@@ -4,6 +4,7 @@ using Domen;
 using FluentValidation;
 using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.DefaultServices;
+using MikroServisProizvod.Application.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
             if (entity == null)
             {
                 //return null;
-                throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()}.");
+                throw new EntityNotFoundException($"Nepostojeci {typeof(TEntity).Name.ToLower()}.");
             }
 
             var parsedDto = _mapper.Map<TDto>(entity);

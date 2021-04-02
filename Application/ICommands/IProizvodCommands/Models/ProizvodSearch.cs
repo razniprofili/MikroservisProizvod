@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MikroServisProizvod.Application.IServices.Commands.Models
+namespace MikroServisProizvod.Application.ICommands.Commands.Models
 {
     public class ProizvodSearch : PagedSearch
     {

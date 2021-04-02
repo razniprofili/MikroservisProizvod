@@ -4,7 +4,7 @@ using MikroServisProizvod.Application.BaseCommands;
 using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.BaseModels;
 using MikroServisProizvod.Application.DefaultServices;
-using MikroServisProizvod.Application.IServices;
+using MikroServisProizvod.Application.ICommands;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
