@@ -13,7 +13,6 @@ namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod
     {
         public ProizvodValidator(Context context)
         {
-
             RuleFor(x => x.Naziv)
                 .Must(x => !String.IsNullOrEmpty(x))
                 .WithMessage("Naziv ne sme biti prazan.")
@@ -36,7 +35,6 @@ namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod
             RuleFor(x => x.Cena)
                 .Must((x, y) => x.Cena >= 0)
                 .WithMessage("Cena ne sme biti negativan broj");
-            
         }
 
     }
