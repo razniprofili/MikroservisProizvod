@@ -18,7 +18,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
         {
         }
 
-        public Empty Execute(long id)
+        public virtual Empty Execute(long id)
         {
             var entity = GenericRepository.FirstOrDefault(x => x.Id == id);
 

@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations
 {
-    public abstract class BasePagedSearchService<TEntity, TDto, TSearch> : BaseMapperCommand<TEntity,TDto>, ISearchCommand<TSearch>
+    public abstract class BasePagedSearchCommand<TEntity, TDto, TSearch> : BaseMapperCommand<TEntity,TDto>, ISearchCommand<TSearch>
         where TEntity : BaseEntity
         where TDto : BaseDto
         where TSearch : PagedSearch
     {
-        protected BasePagedSearchService(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository, mapper)
+        protected BasePagedSearchCommand(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {
         }
 
@@ -27,7 +27,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         protected abstract Expression<Func<TEntity, bool>> SearchExpression(TSearch search);
 
-        public object Execute(TSearch search)
+        public virtual object Execute(TSearch search)
         {
             IQueryable<TEntity> entities;
 

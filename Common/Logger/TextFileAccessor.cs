@@ -9,9 +9,9 @@ namespace Common.Logger
 {
     public class TextFileAccessor : ITextFileAccessor
     {
+        private string FullDirectoryRoute => Directory.GetCurrentDirectory() + "/" + LoggFilesDirectoryName;
         private string LoggFilesDirectoryName => "LoggFiles";
         private string LoggFilePath => FullDirectoryRoute + "/loggs.txt";
-        private string FullDirectoryRoute => Directory.GetCurrentDirectory() + "/" + LoggFilesDirectoryName;
         public TextFileAccessor()
         {
             EnsureExcelDirectoryExists();
@@ -30,19 +30,23 @@ namespace Common.Logger
         {
             if (!File.Exists(LoggFilePath))
             {
-                File.Create(LoggFilePath);
+                using (File.Create(LoggFilePath)) { } ;
             }
         }
 
         public void WriteNewLine(string text)
         {
-            var textFile = File.Open(LoggFilePath, FileMode.OpenOrCreate);
-            //write new line.
+            using (StreamWriter file = new StreamWriter(LoggFilePath, append: true)) {
+                file.WriteLine(text);
+            }
         }
 
         public void UpdateExistingLine(string text)
         {
-            // add code to end of line.
+            using (StreamWriter file = new StreamWriter(LoggFilePath, append: true))
+            {
+                file.WriteLine(text);
+            }
         }
     }
 

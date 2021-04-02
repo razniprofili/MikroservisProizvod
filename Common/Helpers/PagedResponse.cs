@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.Helpers
 {
-    public class PagedResponse<TDto>
+    public class PagedResponse<TDto> : BaseResponse
     {
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
@@ -15,5 +15,8 @@ namespace Common.Helpers
         public bool HasPrevious => (CurrentPage > 1); //true ako je curent page >1
         public bool HasNext => (CurrentPage < TotalPages); //true ako je ispunjen ovaj uslov
         public IEnumerable<TDto> Data { get; set; }
+    }
+
+    public abstract class BaseResponse { 
     }
 }

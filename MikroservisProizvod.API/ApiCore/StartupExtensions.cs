@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.Logger;
 using Data;
 using Domen;
 using FluentValidation;
@@ -24,6 +25,9 @@ namespace MikroservisProizvod.API.ApiCore
             services.AddTransient<IUpdateProizvodCommand, UpdateProizvodCommand>();
             services.AddTransient<IFindProizvodCommand, FindProizvodCommand>();
             services.AddTransient<IDeleteProizvodCommand, DeleteProizvodCommand>();
+            services.AddTransient<ITextFileAccessor, TextFileAccessor>();
+            services.AddTransient<TextObjectAdapter>();
+            services.AddTransient<LoggerMediator>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)

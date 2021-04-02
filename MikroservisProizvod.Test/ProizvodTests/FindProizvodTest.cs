@@ -74,7 +74,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 Pdv = 0.11,
                 JedinicaMereId = 1,
                 TipProizvodaId = 1,
-                DobavljaciIds = new List<long>() { 1 }
+                Dobavljaci = new List<long>() { 1 }
             };
         }
 

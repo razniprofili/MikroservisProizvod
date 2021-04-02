@@ -22,7 +22,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
             _validator = validator;
         }
 
-        public TDto Execute(TDto dto)
+        public virtual TDto Execute(TDto dto)
         {
             var entity = GenericRepository.FirstOrDefault(x => x.Id == dto.Id);
 
