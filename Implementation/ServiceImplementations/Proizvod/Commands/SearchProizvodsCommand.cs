@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
 {
-    public class SearchProizvodsCommand : BasePagedSearchService<Domen.Proizvod, ProizvodDto, ProizvodSearch>, ISearchProizvodsCommand
+    public class SearchProizvodsCommand : BasePagedSearchCommand<Domen.Proizvod, ReadProizvodDto, ProizvodSearch>, ISearchProizvodsCommand
     {
         public SearchProizvodsCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {
@@ -20,7 +20,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Ser
         {
             Expression<Func<Domen.Proizvod, bool>> expression;
 
-            if ( String.IsNullOrEmpty(search.Keyword)) // ako je keyword prazan, onda nemamo uslov za pretragu, vracamo sve
+            if (String.IsNullOrEmpty(search.Keyword)) // ako je keyword prazan, onda nemamo uslov za pretragu, vracamo sve
             {
                 expression = p => true;
                 return expression;
@@ -34,6 +34,6 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Ser
             return expression;
         }
 
-        protected override string IncludedProperties => "JedinicaMere,TipProizvoda,Dobavljaci";
+        protected override string IncludedProperties => "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac";
     }
 }

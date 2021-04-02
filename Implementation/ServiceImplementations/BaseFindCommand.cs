@@ -20,7 +20,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
         {
         }
 
-        public TDto Execute(long id)
+        public virtual TDto Execute(long id)
         {
             TEntity entity = IncludedEntities.Length > 0
                 ? GenericRepository.FirstOrDefault(x => x.Id == id, IncludedEntities)

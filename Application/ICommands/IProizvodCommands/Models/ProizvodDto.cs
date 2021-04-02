@@ -13,7 +13,7 @@ namespace MikroServisProizvod.Application.IServices.ProizvodServices.Models
         public double Pdv { get; set; }
         public long TipProizvodaId { get; set; }
         public long JedinicaMereId { get; set; }
-        public ICollection<long> DobavljaciIds { get; set; }
+        public ICollection<long> Dobavljaci { get; set; }
     }
 
     public class ReadProizvodDto : BaseDto
