@@ -19,7 +19,7 @@ namespace MikroservisProizvod.API.ApiCore
                 {
                     return HandleCollection(value);
                 }
-                if (value is ITrackableObject)
+                if (value is ILoggableObject)
                 {
                     return HandleBaseDtosString(value);
                 }
@@ -47,28 +47,12 @@ namespace MikroservisProizvod.API.ApiCore
         private string HandleCollection(object value)
         {
             var stringToReturn = "[";
-            var genericType = value.GetType().GetGenericArguments().FirstOrDefault();
-            if (genericType == typeof(int))
-            {
-                foreach (var singleValue in (IEnumerable<int>)value)
+            
+                foreach (var singleValue in (IEnumerable)value)
                 {
                     stringToReturn += GenerateString(singleValue) + ", ";
                 }
-            }
-            else if (genericType == typeof(long))
-            {
-                foreach (var singleValue in (IEnumerable<long>)value)
-                {
-                    stringToReturn += GenerateString(singleValue) + ", ";
-                }
-            }
-            else
-            {
-                foreach (var singleValue in (IEnumerable<object>)value)
-                {
-                    stringToReturn += GenerateString(singleValue) + ", ";
-                }
-            }
+            
             stringToReturn += "]";
             return stringToReturn;
         }

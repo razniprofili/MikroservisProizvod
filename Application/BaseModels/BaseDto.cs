@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.BaseDtos
 {
-    public abstract class BaseDto : ITrackableObject
+    public abstract class BaseDto : ILoggableObject
     {
         public long Id { get; set; }
     }

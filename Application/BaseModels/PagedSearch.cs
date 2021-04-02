@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.BaseModels
 {
-    public abstract class PagedSearch : ITrackableObject
+    public abstract class PagedSearch : ILoggableObject
     {
         public bool IsPagedResponse { get; set; }
         const int maxPageSize = 20;

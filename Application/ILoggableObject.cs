@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Application
 {
-    public interface ITrackableObject
+    public interface ILoggableObject
     {
     }
 }

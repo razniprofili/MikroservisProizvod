@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Application.BaseModels
 {
-    public class PagedResponse<TDto> : ITrackableObject
+    public class PagedResponse<TDto> : ILoggableObject
     {
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
