@@ -25,8 +25,7 @@ namespace MikroservisProizvod.API.ApiCore
             services.AddTransient<IUpdateProizvodCommand, UpdateProizvodCommand>();
             services.AddTransient<IFindProizvodCommand, FindProizvodCommand>();
             services.AddTransient<IDeleteProizvodCommand, DeleteProizvodCommand>();
-            services.AddTransient<ITextFileAccessor, TextFileAccessor>();
-            services.AddTransient<TextObjectAdapter>();
+            services.AddTransient<ILoggTextFileAccessor, LogTextFileAccessor>();
             services.AddTransient<LoggerMediator>();
         }
 
