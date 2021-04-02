@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MikroServisProizvod.Application.IServices
+namespace MikroServisProizvod.Application.ICommands
 {
     public interface IDeleteProizvodCommand : IDeleteCommand
     {

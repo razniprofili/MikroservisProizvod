@@ -3,17 +3,12 @@ using Data;
 using Domen;
 using FluentValidation;
 using FluentValidation.Results;
-using MikroServisProizvod.Application.IServices;
-using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
-using MikroServisProizvod.Application.SeparatedModels;
-using MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services;
+using MikroServisProizvod.Application.ICommands;
+using MikroServisProizvod.Application.ICommands.Commands.Models;
+using MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Commands;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MikroservisProizvod.Test.ProizvodTests
 {

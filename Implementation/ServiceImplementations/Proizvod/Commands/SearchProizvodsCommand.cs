@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Data;
 using MikroServisProizvod.Application.BaseModels;
-using MikroServisProizvod.Application.IServices;
-using MikroServisProizvod.Application.IServices.Commands.Models;
+using MikroServisProizvod.Application.ICommands;
+using MikroServisProizvod.Application.ICommands.Commands.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Services
+namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Commands
 {
     public class SearchProizvodsCommand : BasePagedSearchCommand<Domen.Proizvod, ReadProizvodDto, ProizvodSearch>, ISearchProizvodsCommand
     {

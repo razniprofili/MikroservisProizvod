@@ -1,0 +1,14 @@
+4/2/2021 4:04:45 PM - Logg : Korisnik izvrsava komandu AddProizvodCommand sa podacima: {"Naziv":"Proizvod 12345","Cena":222.0,"Pdv":5.0,"TipProizvodaId":1,"JedinicaMereId":1,"Dobavljaci":[1111],"Id":0};
+4/2/2021 4:04:50 PM - Logg : Desila se neocekivana greska na serveru, Greska: Validation failed: 
+ -- : Dobavljac mora postojati u bazi
+4/2/2021 4:13:54 PM - Logg : Korisnik izvrsava komandu AddProizvodCommand sa podacima: {"Naziv":"Proizvod 12345","Cena":222.0,"Pdv":5.0,"TipProizvodaId":1,"JedinicaMereId":1,"Dobavljaci":[1111],"Id":0};
+4/2/2021 4:13:58 PM - Logg : Desila se neocekivana greska na serveru, Greska: Validation failed: 
+ -- : Dobavljac mora postojati u bazi
+4/2/2021 4:17:26 PM - Logg : Korisnik izvrsava komandu AddProizvodCommand sa podacima: {"Naziv":"Proizvod 12345","Cena":222.0,"Pdv":5.0,"TipProizvodaId":1,"JedinicaMereId":1,"Dobavljaci":[1111],"Id":0};
+4/2/2021 4:17:30 PM - Logg : Desila se neocekivana greska na serveru, Greska: Validation failed: 
+ -- Naziv: Naziv mora biti jedinstven.
+ -- Dobavljaci: Dobavljac mora postojati u bazi
+4/2/2021 4:18:59 PM - Logg : Korisnik izvrsava komandu AddProizvodCommand sa podacima: {"Naziv":"Proizvod 12345","Cena":222.0,"Pdv":5.0,"TipProizvodaId":1,"JedinicaMereId":1,"Dobavljaci":[1111],"Id":0};
+4/2/2021 4:19:02 PM - Logg : Desila se neocekivana greska na serveru, Greska: Validation failed: 
+ -- Naziv: Naziv mora biti jedinstven.
+ -- Dobavljaci: Dobavljac mora postojati u bazi
