@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MikroServisProizvod.Implementation.ServiceImplementations
+namespace MikroServisProizvod.Implementation.CommandImplementations
 {
     public class BaseFindCommand<TEntity, TDto> : BaseMapperCommand<TEntity, TDto>, IFindCommand<TDto>
         where TEntity : BaseEntity
@@ -23,8 +23,8 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
         public virtual TDto Execute(long id)
         {
             TEntity entity = IncludedEntities.Length > 0
-                ? GenericRepository.FirstOrDefault(x => x.Id == id, IncludedEntities)
-                : GenericRepository.FirstOrDefault(x => x.Id == id);
+                ? _genericRepository.FirstOrDefault(x => x.Id == id, IncludedEntities)
+                : _genericRepository.FirstOrDefault(x => x.Id == id);
 
             if (entity == null)
             {
@@ -32,7 +32,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
                 throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()}.");
             }
 
-            var parsedDto = Mapper.Map<TDto>(entity);
+            var parsedDto = _mapper.Map<TDto>(entity);
 
             return parsedDto;
         }

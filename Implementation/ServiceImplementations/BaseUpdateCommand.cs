@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MikroServisProizvod.Implementation.ServiceImplementations
+namespace MikroServisProizvod.Implementation.CommandImplementations
 {
     public class BaseUpdateCommand<TEntity, TDto> : BaseMapperCommand<TEntity, TDto>, IUpdateCommand<TDto,TDto>
         where TEntity : BaseEntity
@@ -24,7 +24,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         public virtual TDto Execute(TDto dto)
         {
-            var entity = GenericRepository.FirstOrDefault(x => x.Id == dto.Id);
+            var entity = _genericRepository.FirstOrDefault(x => x.Id == dto.Id);
 
             if (entity is null) // prvo proverimo da li entitet za azuriranje postoji u bazi, pa onda sve ostalo
             {
@@ -38,9 +38,9 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
                 throw new ValidationException(validationResult.Errors.AsEnumerable());
             }
 
-            var mappedEntity = Mapper.Map(dto, entity);
+            var mappedEntity = _mapper.Map(dto, entity);
 
-            GenericRepository.Update(mappedEntity);
+            _genericRepository.Update(mappedEntity);
 
             dto.Id = mappedEntity.Id;
 

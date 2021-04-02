@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domen;
 using Microsoft.EntityFrameworkCore;
-using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
+using MikroServisProizvod.Application.IServices.Commands.Models;
 using MikroServisProizvod.Application.SeparatedModels;
 using System;
 using System.Collections.Generic;

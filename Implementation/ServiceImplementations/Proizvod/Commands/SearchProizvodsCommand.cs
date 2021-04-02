@@ -2,13 +2,13 @@
 using Data;
 using MikroServisProizvod.Application.BaseModels;
 using MikroServisProizvod.Application.IServices;
-using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
+using MikroServisProizvod.Application.IServices.Commands.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
+namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Services
 {
     public class SearchProizvodsCommand : BasePagedSearchCommand<Domen.Proizvod, ReadProizvodDto, ProizvodSearch>, ISearchProizvodsCommand
     {
@@ -20,7 +20,7 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Ser
         {
             Expression<Func<Domen.Proizvod, bool>> expression;
 
-            if (String.IsNullOrEmpty(search.Keyword)) // ako je keyword prazan, onda nemamo uslov za pretragu, vracamo sve
+            if (!String.IsNullOrEmpty(search.Keyword)) // ako je keyword prazan, onda nemamo uslov za pretragu, vracamo sve
             {
                 expression = p => true;
                 return expression;

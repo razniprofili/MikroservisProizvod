@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services
+namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Services
 {
     public class DeleteProizvodCommand : BaseDeleteCommand<Domen.Proizvod>, IDeleteProizvodCommand
     {

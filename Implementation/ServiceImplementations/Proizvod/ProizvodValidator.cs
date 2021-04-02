@@ -1,13 +1,13 @@
 ﻿using Domen;
 using FluentValidation;
-using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
+using MikroServisProizvod.Application.IServices.Commands.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MikroServisProizvod.Implementation.ServiceImplementations.Proizvod
+namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod
 {
     public class ProizvodValidator : AbstractValidator<ProizvodDto>
     {

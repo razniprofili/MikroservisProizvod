@@ -40,19 +40,10 @@ namespace Common.Logger
                 file.WriteLine(text);
             }
         }
-
-        public void UpdateExistingLine(string text)
-        {
-            using (StreamWriter file = new StreamWriter(LoggFilePath, append: true))
-            {
-                file.WriteLine(text);
-            }
-        }
     }
 
     public interface ITextFileAccessor
     {
         void WriteNewLine(string text);
-        void UpdateExistingLine(string text);
     }
 }

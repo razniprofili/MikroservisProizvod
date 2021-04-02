@@ -1,7 +1,8 @@
-﻿using Common.Helpers;
+﻿using MikroServisProizvod.Application;
 using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.BaseModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,18 +13,22 @@ namespace MikroservisProizvod.API.ApiCore
     {
         public string GenerateString(object value)
         {
-            if (value.GetType().Name.Contains("List") || value.GetType().Name.Contains("IEnumerable"))
+            if (value is not null)
             {
-                return HandleGenericTypeString(value);
+                if (value is IEnumerable && value.GetType().IsGenericType)
+                {
+                    return HandleCollection(value);
+                }
+                if (value is ILoggableObject)
+                {
+                    return HandleBaseDtosString(value);
+                }
+                else
+                {
+                    return value.ToString();
+                }
             }
-            if (value.GetType().IsSubclassOf(typeof(BaseDto)) || value.GetType().IsSubclassOf(typeof(PagedSearch)) || value.GetType().IsSubclassOf(typeof(BaseResponse)))
-            {
-                return HandleBaseDtosString(value);
-            }
-            else
-            {
-                return value.ToString();
-            }
+            return " null ";
         }
 
         private string HandleBaseDtosString(object value)
@@ -39,31 +44,15 @@ namespace MikroservisProizvod.API.ApiCore
             return stringObject;
         }
 
-        private string HandleGenericTypeString(object value)
+        private string HandleCollection(object value)
         {
             var stringToReturn = "[";
-            var genericType = value.GetType().GetGenericArguments().FirstOrDefault();
-            if (genericType == typeof(int))
-            {
-                foreach (var singleValue in (IEnumerable<int>)value)
+            
+                foreach (var singleValue in (IEnumerable)value)
                 {
                     stringToReturn += GenerateString(singleValue) + ", ";
                 }
-            }
-            else if (genericType == typeof(long))
-            {
-                foreach (var singleValue in (IEnumerable<long>)value)
-                {
-                    stringToReturn += GenerateString(singleValue) + ", ";
-                }
-            }
-            else
-            {
-                foreach (var singleValue in (IEnumerable<object>)value)
-                {
-                    stringToReturn += GenerateString(singleValue) + ", ";
-                }
-            }
+            
             stringToReturn += "]";
             return stringToReturn;
         }

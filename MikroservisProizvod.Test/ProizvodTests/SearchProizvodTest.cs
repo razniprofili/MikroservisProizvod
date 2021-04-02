@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Common.Helpers;
 using Data;
 using Domen;
+using MikroServisProizvod.Application.BaseModels;
 using MikroServisProizvod.Application.IServices;
-using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
+using MikroServisProizvod.Application.IServices.Commands.Models;
 using MikroServisProizvod.Application.SeparatedModels;
-using MikroServisProizvod.Implementation.ServiceImplementations.Proizvod.Services;
+using MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Services;
 using Moq;
 using NUnit.Framework;
 using System;
