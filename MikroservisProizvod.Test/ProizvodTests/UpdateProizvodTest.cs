@@ -3,6 +3,7 @@ using Data;
 using Domen;
 using FluentValidation;
 using FluentValidation.Results;
+using MikroServisProizvod.Application.Exceptions;
 using MikroServisProizvod.Application.ICommands;
 using MikroServisProizvod.Application.ICommands.Commands.Models;
 using MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Commands;
@@ -128,7 +129,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 .Returns((Proizvod)null);
 
             // izvrsenje i provera
-            Exception ex = Assert.Throws<ValidationException>(delegate { _updateProizvodCommand.Execute(proizvodToUpdate); });
+            Exception ex = Assert.Throws<EntityNotFoundException>(delegate { _updateProizvodCommand.Execute(proizvodToUpdate); });
             Assert.That(ex.Message, Is.EqualTo("Nepostojeci proizvod poslat na azuriranje."));
 
         }
