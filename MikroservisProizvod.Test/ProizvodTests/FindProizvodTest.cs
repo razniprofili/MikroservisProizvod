@@ -2,8 +2,10 @@
 using Data;
 using Domen;
 using FluentValidation;
+using MikroServisProizvod.Application.Exceptions;
 using MikroServisProizvod.Application.ICommands;
 using MikroServisProizvod.Application.ICommands.Commands.Models;
+using MikroServisProizvod.Application.SeparatedModels;
 using MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Commands;
 using Moq;
 using NUnit.Framework;
@@ -110,7 +112,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
             _mockGenericRepository.Setup(gr => gr.FirstOrDefault(p => p.Id == id, "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac"))
                 .Returns((Proizvod)null);
 
-            Exception ex = Assert.Throws<ValidationException>(delegate { _findProizvodService.Execute(id); });
+            Exception ex = Assert.Throws<EntityNotFoundException>(delegate { _findProizvodService.Execute(id); });
             Assert.That(ex.Message, Is.EqualTo("Nepostojeci proizvod."));
         }
     }
