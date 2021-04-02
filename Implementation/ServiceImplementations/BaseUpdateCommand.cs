@@ -4,6 +4,7 @@ using Domen;
 using FluentValidation;
 using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.DefaultServices;
+using MikroServisProizvod.Application.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
 
             if (entity is null) // prvo proverimo da li entitet za azuriranje postoji u bazi, pa onda sve ostalo
             {
-                throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()} poslat na azuriranje.");
+                throw new EntityNotFoundException($"Nepostojeci {typeof(TEntity).Name.ToLower()} poslat na azuriranje.");
             }
 
             var validationResult = _validator.Validate(dto);

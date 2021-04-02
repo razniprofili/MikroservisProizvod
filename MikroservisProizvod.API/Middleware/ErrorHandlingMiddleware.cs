@@ -1,6 +1,7 @@
 ﻿
 using Common.Logger;
 using Microsoft.AspNetCore.Http;
+using MikroServisProizvod.Application.Exceptions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -46,19 +47,39 @@ namespace MikroservisProizvod.API.Middleware
             
             var code = HttpStatusCode.InternalServerError; // 500
 
-            var errors = new List<object>();
+            object errorResponse;
+            var errorText = "";
 
             switch (ex)
             {
                 case FluentValidation.ValidationException validationEx:
                     code = HttpStatusCode.UnprocessableEntity;
-                    foreach(var exception in validationEx.Errors)
+                    var errors = new List<object>();
+                    foreach (var exception in validationEx.Errors)
                     {
                         errors.Add(new { property = exception.PropertyName, error = exception.ErrorMessage });
                     }
+                    errorResponse = new
+                    {
+                        Errors = errors,
+                        Message = "Validation exception"
+                    };
+                    break;
+                case EntityNotFoundException nfex:
+                    errorText = "Entitet sa prosledjenim identifikatorom nije pronadjen u bazi : ";
+                    code = HttpStatusCode.NotFound;
+                    errorResponse = new
+                    {
+                        Error = "Entitet sa prosledjenim identifikatorom nije pronadjen u bazi",
+                        Message = "Entity not found Exception"
+                    };
                     break;
                 default:
-                    errors.Add(new { error = ex.Message });
+                    errorText = "Desila se neocekivana greska na serveru, Greska: ";
+                    errorResponse = new {
+                        Error = "Internal server error",
+                        Message = ex.Message
+                    };
                     break;
             }
             
@@ -66,9 +87,9 @@ namespace MikroservisProizvod.API.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
 
-            _textFileAccessor.WriteNewLine("Desila se neocekivana greska na serveru, Greska: " + ex.Message);
+            _textFileAccessor.WriteNewLine(errorText + ex.Message);
 
-            return context.Response.WriteAsync(JsonConvert.SerializeObject(errors));
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));
 
         }
 
