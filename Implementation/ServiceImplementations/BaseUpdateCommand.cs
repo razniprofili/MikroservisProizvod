@@ -24,7 +24,7 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
 
         public virtual TDto Execute(TDto dto)
         {
-            var entity = _genericRepository.FirstOrDefault(x => x.Id == dto.Id);
+            var entity = _genericRepository.FirstOrDefault(x => x.Id == dto.Id, "");
 
             if (entity is null) // prvo proverimo da li entitet za azuriranje postoji u bazi, pa onda sve ostalo
             {
@@ -38,7 +38,7 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
                 throw new ValidationException(validationResult.Errors.AsEnumerable());
             }
 
-            var mappedEntity = _mapper.Map(dto, entity);
+            var mappedEntity = _mapper.Map<TEntity>(dto);
 
             _genericRepository.Update(mappedEntity);
 
