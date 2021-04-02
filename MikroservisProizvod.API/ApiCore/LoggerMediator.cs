@@ -23,7 +23,7 @@ namespace MikroservisProizvod.API.ApiCore
         }
         public TRes HandleProccessExecution<TReq,TRes>(ICommand<TReq, TRes> command, TReq req)
         {
-            _fileAccessor.WriteNewLine(GetLoggingText(command, req));
+            _fileAccessor.WriteNewLine(GetRequestText(command, req));
 
             var result = command.Execute(req);
 
@@ -32,7 +32,7 @@ namespace MikroservisProizvod.API.ApiCore
             return result;
         }
 
-        public string GetLoggingText<TReq, TRes>(ICommand<TReq, TRes> command, TReq req) => $"{DateTime.Now} : Korisnik izvrsava komandu {command.GetType().Name} sa podacima: {_textObjectAdapter.GenerateString(req)};";
+        public string GetRequestText<TReq, TRes>(ICommand<TReq, TRes> command, TReq req) => $"{DateTime.Now} : Korisnik izvrsava komandu {command.GetType().Name} sa podacima: {_textObjectAdapter.GenerateString(req)};";
         public string GetResultText<TReq, TRes>(ICommand<TReq, TRes> command, TRes result) => $"{DateTime.Now} : Korisnik je izvrsio komandu {command.GetType().Name}, server je odgovorio: {_textObjectAdapter.GenerateString(result)};";
     }
 }

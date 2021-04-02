@@ -17,7 +17,7 @@ namespace MikroservisProizvod.API.ApiCore
             {
                 if (value is IEnumerable && value.GetType().IsGenericType)
                 {
-                    return HandleCollection(value);
+                    return HandleCollection((IEnumerable)value);
                 }
                 if (value is ILoggableObject)
                 {
@@ -44,11 +44,11 @@ namespace MikroservisProizvod.API.ApiCore
             return stringObject;
         }
 
-        private string HandleCollection(object value)
+        private string HandleCollection(IEnumerable value)
         {
             var stringToReturn = "[";
             
-                foreach (var singleValue in (IEnumerable)value)
+                foreach (var singleValue in value)
                 {
                     stringToReturn += GenerateString(singleValue) + ", ";
                 }
