@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Common.Helpers;
 using Data;
 using Domen;
+using MikroServisProizvod.Application.BaseModels;
 using MikroServisProizvod.Application.IServices;
 using MikroServisProizvod.Application.IServices.ProizvodServices.Models;
 using MikroServisProizvod.Application.SeparatedModels;

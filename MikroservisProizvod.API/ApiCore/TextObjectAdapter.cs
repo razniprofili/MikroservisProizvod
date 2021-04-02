@@ -1,7 +1,8 @@
-﻿using Common.Helpers;
+﻿using MikroServisProizvod.Application;
 using MikroServisProizvod.Application.BaseDtos;
 using MikroServisProizvod.Application.BaseModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,11 @@ namespace MikroservisProizvod.API.ApiCore
     {
         public string GenerateString(object value)
         {
-            if (value.GetType().Name.Contains("List") || value.GetType().Name.Contains("IEnumerable"))
+            if (value is IEnumerable && value.GetType().IsGenericType)
             {
-                return HandleGenericTypeString(value);
+                return HandleCollection(value);
             }
-            if (value.GetType().IsSubclassOf(typeof(BaseDto)) || value.GetType().IsSubclassOf(typeof(PagedSearch)) || value.GetType().IsSubclassOf(typeof(BaseResponse)))
+            if (value is ITrackableObject)
             {
                 return HandleBaseDtosString(value);
             }
@@ -39,7 +40,7 @@ namespace MikroservisProizvod.API.ApiCore
             return stringObject;
         }
 
-        private string HandleGenericTypeString(object value)
+        private string HandleCollection(object value)
         {
             var stringToReturn = "[";
             var genericType = value.GetType().GetGenericArguments().FirstOrDefault();
