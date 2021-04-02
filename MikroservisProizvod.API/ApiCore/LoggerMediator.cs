@@ -15,8 +15,8 @@ namespace MikroservisProizvod.API.ApiCore
 {
     public class LoggerMediator
     {
-        private readonly ITextFileAccessor _fileAccessor;
-        public LoggerMediator(ITextFileAccessor textFileAccessor)
+        private readonly ILoggTextFileAccessor _fileAccessor;
+        public LoggerMediator(ILoggTextFileAccessor textFileAccessor)
         {
             _fileAccessor = textFileAccessor;
         }
@@ -31,7 +31,7 @@ namespace MikroservisProizvod.API.ApiCore
             return result;
         }
 
-        public string GetRequestText<TReq, TRes>(ICommand<TReq, TRes> command, TReq req) => $"{DateTime.Now} : Korisnik izvrsava komandu {command.GetType().Name} sa podacima: {JsonConvert.SerializeObject(req)};";
-        public string GetResultText<TReq, TRes>(ICommand<TReq, TRes> command, TRes result) => $"{DateTime.Now} : Korisnik je izvrsio komandu {command.GetType().Name}, server je odgovorio: {JsonConvert.SerializeObject(result)};";
+        public string GetRequestText<TReq, TRes>(ICommand<TReq, TRes> command, TReq req) => $"Korisnik izvrsava komandu {command.GetType().Name} sa podacima: {JsonConvert.SerializeObject(req)};";
+        public string GetResultText<TReq, TRes>(ICommand<TReq, TRes> command, TRes result) => $"Korisnik je izvrsio komandu {command.GetType().Name}, server je odgovorio: {JsonConvert.SerializeObject(result)};";
     }
 }

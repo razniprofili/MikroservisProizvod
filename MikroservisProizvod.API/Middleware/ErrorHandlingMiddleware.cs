@@ -15,12 +15,12 @@ namespace MikroservisProizvod.API.Middleware
         #region Fields
 
         private RequestDelegate _next;
-        private ITextFileAccessor _textFileAccessor;
+        private ILoggTextFileAccessor _textFileAccessor;
 
         #endregion
 
         #region Constructor
-        public ErrorHandlingMiddleware(RequestDelegate next, ITextFileAccessor accessor)
+        public ErrorHandlingMiddleware(RequestDelegate next, ILoggTextFileAccessor accessor)
         {
             _next = next;
             _textFileAccessor = accessor;

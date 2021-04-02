@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Common.Logger
 {
-    public class TextFileAccessor : ITextFileAccessor
+    public class LogTextFileAccessor : ILoggTextFileAccessor
     {
         private string FullDirectoryRoute => Directory.GetCurrentDirectory() + "/" + LoggFilesDirectoryName;
         private string LoggFilesDirectoryName => "LoggFiles";
         private string LoggFilePath => FullDirectoryRoute + "/loggs.txt";
-        public TextFileAccessor()
+        public LogTextFileAccessor()
         {
             EnsureExcelDirectoryExists();
             EnsureCreatedFile();
@@ -37,12 +37,12 @@ namespace Common.Logger
         public void WriteNewLine(string text)
         {
             using (StreamWriter file = new StreamWriter(LoggFilePath, append: true)) {
-                file.WriteLine(text);
+                file.WriteLine($"{DateTime.Now} - Logg : {text}");
             }
         }
     }
 
-    public interface ITextFileAccessor
+    public interface ILoggTextFileAccessor
     {
         void WriteNewLine(string text);
     }

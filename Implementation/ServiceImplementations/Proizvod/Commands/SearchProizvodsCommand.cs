@@ -20,7 +20,7 @@ namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Ser
         {
             Expression<Func<Domen.Proizvod, bool>> expression;
 
-            if (!String.IsNullOrEmpty(search.Keyword)) // ako je keyword prazan, onda nemamo uslov za pretragu, vracamo sve
+            if (String.IsNullOrEmpty(search.Keyword)) // ako je keyword prazan, onda nemamo uslov za pretragu, vracamo sve
             {
                 expression = p => true;
                 return expression;
