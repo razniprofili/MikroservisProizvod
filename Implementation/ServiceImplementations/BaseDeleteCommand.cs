@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MikroServisProizvod.Implementation.ServiceImplementations
+namespace MikroServisProizvod.Implementation.CommandImplementations
 {
     public class BaseDeleteCommand<TEntity> : BaseCommand<TEntity>, IDeleteCommand
         where TEntity : BaseEntity
@@ -20,14 +20,14 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
         public virtual Empty Execute(long id)
         {
-            var entity = GenericRepository.FirstOrDefault(x => x.Id == id);
+            var entity = _genericRepository.FirstOrDefault(x => x.Id == id);
 
             if (entity is null) // prvo proverimo da li entity za brisanje postoji u bazi
             {
                 throw new ValidationException($"Nepostojeci {typeof(TEntity).Name.ToLower()} poslat na brisanje.");
             }
 
-            GenericRepository.Delete(id);
+            _genericRepository.Delete(id);
 
             return new Empty();
         }

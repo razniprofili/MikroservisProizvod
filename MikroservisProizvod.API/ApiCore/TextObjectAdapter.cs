@@ -13,18 +13,22 @@ namespace MikroservisProizvod.API.ApiCore
     {
         public string GenerateString(object value)
         {
-            if (value is IEnumerable && value.GetType().IsGenericType)
+            if (value is not null)
             {
-                return HandleCollection(value);
+                if (value is IEnumerable && value.GetType().IsGenericType)
+                {
+                    return HandleCollection(value);
+                }
+                if (value is ITrackableObject)
+                {
+                    return HandleBaseDtosString(value);
+                }
+                else
+                {
+                    return value.ToString();
+                }
             }
-            if (value is ITrackableObject)
-            {
-                return HandleBaseDtosString(value);
-            }
-            else
-            {
-                return value.ToString();
-            }
+            return " null ";
         }
 
         private string HandleBaseDtosString(object value)

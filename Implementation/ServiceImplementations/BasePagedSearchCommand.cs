@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MikroServisProizvod.Implementation.ServiceImplementations
+namespace MikroServisProizvod.Implementation.CommandImplementations
 {
     public abstract class BasePagedSearchCommand<TEntity, TDto, TSearch> : BaseMapperCommand<TEntity,TDto>, ISearchCommand<TSearch>
         where TEntity : BaseEntity
@@ -32,11 +32,11 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
 
             if (IncludedProperties.Length > 0)
             {
-                entities = GenericRepository.Search(SearchExpression(search), IncludedProperties);//"TipProizvoda,JedinicaMere,Dobavljaci"
+                entities = _genericRepository.Search(SearchExpression(search), IncludedProperties);//"TipProizvoda,JedinicaMere,Dobavljaci"
             }
             else
             {
-                entities = GenericRepository.Search(SearchExpression(search));
+                entities = _genericRepository.Search(SearchExpression(search));
             }
 
             var totalCount = entities.Count();
@@ -47,10 +47,10 @@ namespace MikroServisProizvod.Implementation.ServiceImplementations
             }
             else
             {
-                return Mapper.Map<IEnumerable<TDto>>(entities.ToList());
+                return _mapper.Map<IEnumerable<TDto>>(entities.ToList());
             }
 
-            var parsedDtos = Mapper.Map<IEnumerable<TDto>>(entities.ToList());
+            var parsedDtos = _mapper.Map<IEnumerable<TDto>>(entities.ToList());
 
             return new PagedResponse<TDto>
             {
