@@ -8,6 +8,5 @@ namespace MikroServisProizvod.Application.IServices.Commands.Models
     public class ProizvodSearch : PagedSearch
     {
         public string Keyword { get; set; }
-        public int? TipProizvodaId { get; set; }
     }
 }
