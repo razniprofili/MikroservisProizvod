@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Commands
 {
-    public class UpdateProizvodCommand : BaseUpdateCommand<Domen.Proizvod, ProizvodDto>, IUpdateProizvodCommand
+    public class UpdateProizvodCommand : BaseUpdateCommand<Domen.Proizvod, ProizvodDto, ReadProizvodDto>, IUpdateProizvodCommand
     {
         public UpdateProizvodCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper, IValidator<ProizvodDto> validator) : base(genericRepository, mapper, validator)
         {
         }
+        protected override string IncludedPropertiesOnExport => "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac";
     }
 }
