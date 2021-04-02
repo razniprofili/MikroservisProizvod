@@ -22,7 +22,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
         private Mock<IMapper> _mockMapper;
         private ISearchProizvodsCommand _searchProizvodCommand;
         private List<Proizvod> proizvodi;
-        private List<ProizvodDto> proizvodiDto;
+        private List<ReadProizvodDto> proizvodiDto;
 
         [SetUp]
         public void Setup()
@@ -74,6 +74,11 @@ namespace MikroservisProizvod.Test.ProizvodTests
                         Id = 1,
                         Naziv = "Jedinica mere 1"
                     },
+                    TipProizvoda = new TipProizvoda
+                    {
+                        Id = 1,
+                        Naziv = "Tip proizvoda 1"
+                    },
                     Dobavljaci = new List<ProizvodDobavljac>
                     {
                         new ProizvodDobavljac{
@@ -89,27 +94,59 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 }
             };
 
-            proizvodiDto = new List<ProizvodDto>
+            proizvodiDto = new List<ReadProizvodDto>
             {
-                new ProizvodDto
+                new ReadProizvodDto
                 {
                     Id = 1,
                     Naziv = "Proizvod 1",
                     Cena = 11.1,
                     Pdv = 0.11,
-                    JedinicaMereId = 1,
-                    TipProizvodaId = 1,
-                    Dobavljaci = new List<long>() { 1 }
+                    JedinicaMere = new JedinicaMereDto
+                    {
+                        Id = 1,
+                        Naziv = "Jedinica mere 1"
+                    },
+                    TipProizvoda = new TipProizvodaDto
+                    {
+                        Id = 1,
+                        Naziv = "Tip proizvoda 1"
+                    },
+                    Dobavljaci = new List<DobavljacDto>
+                    {
+                        new DobavljacDto
+                        {
+                            Id = 1,
+                            Naziv = "Dobavljac 1"
+                        }
+                    }
                 },
-                new ProizvodDto
+                new ReadProizvodDto
                 {
                     Id = 2,
                     Naziv = "Proizvod 2",
                     Cena = 22.2,
                     Pdv = 0.22,
-                    JedinicaMereId = 1,
-                    TipProizvodaId = 1,
-                    Dobavljaci = new List<long>(){ 1 }
+                    JedinicaMere = new JedinicaMereDto
+                    {
+                        Id = 1,
+                        Naziv = "Jedinica mere 1"
+                    },
+                    TipProizvoda = new TipProizvodaDto
+                    {
+                        Id = 1,
+                        Naziv = "Tip proizvoda 1"
+                    },
+                    Dobavljaci = new List<DobavljacDto>
+                    {
+                        new DobavljacDto
+                        {
+                            Id = 1,
+                            Naziv = "Dobavljac 1"
+                        }
+
+                    }
+
                 }
             };
         }
@@ -120,14 +157,14 @@ namespace MikroservisProizvod.Test.ProizvodTests
             // priprema
             ProizvodSearch search = new ProizvodSearch { IsPagedResponse = false, Keyword = "" };
 
-            _mockGenericRepository.Setup(gr => gr.Search(p => true, "JedinicaMere,TipProizvoda,Dobavljaci"))
+            _mockGenericRepository.Setup(gr => gr.Search(p => true, "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac"))
                 .Returns(proizvodi.AsQueryable());
 
-            _mockMapper.Setup(m => m.Map<IEnumerable<ProizvodDto>>(proizvodi))
+            _mockMapper.Setup(m => m.Map<IEnumerable<ReadProizvodDto>>(proizvodi))
                 .Returns(proizvodiDto);
 
             // izvrsenje
-            var res = _searchProizvodCommand.Execute(search) as List<ProizvodDto>;
+            var res = _searchProizvodCommand.Execute(search) as List<ReadProizvodDto>;
 
             // provera
             Assert.IsNotNull(res);
@@ -141,14 +178,14 @@ namespace MikroservisProizvod.Test.ProizvodTests
             // priprema
             ProizvodSearch search = new ProizvodSearch { IsPagedResponse = true, Keyword = "", PageSize = 2, PageNumber = 1 };
 
-            _mockGenericRepository.Setup(gr => gr.Search(p => true, "JedinicaMere,TipProizvoda,Dobavljaci"))
+            _mockGenericRepository.Setup(gr => gr.Search(p => true, "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac"))
                 .Returns(proizvodi.AsQueryable());
 
-            _mockMapper.Setup(m => m.Map<IEnumerable<ProizvodDto>>(proizvodi))
+            _mockMapper.Setup(m => m.Map<IEnumerable<ReadProizvodDto>>(proizvodi))
                 .Returns(proizvodiDto);
 
             // izvrsenje
-            var res = _searchProizvodCommand.Execute(search) as PagedResponse<ProizvodDto>;
+            var res = _searchProizvodCommand.Execute(search) as PagedResponse<ReadProizvodDto>;
 
             // provera
             Assert.IsNotNull(res);

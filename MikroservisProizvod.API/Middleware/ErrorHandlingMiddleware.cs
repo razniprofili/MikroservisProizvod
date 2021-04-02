@@ -43,38 +43,32 @@ namespace MikroservisProizvod.API.Middleware
 
         private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
+            
             var code = HttpStatusCode.InternalServerError; // 500
 
-            if (ex is FluentValidation.ValidationException)
-                code = HttpStatusCode.BadRequest; //400
+            var errors = new List<object>();
 
-            string result;
-
-            if(code == HttpStatusCode.InternalServerError)
+            switch (ex)
             {
-                var errorMessage = ex.Message; // ovo bi trebalo logovati, a korisniku prikazati gresku ispod
-
-                 result = JsonConvert.SerializeObject(
-                    new
+                case FluentValidation.ValidationException validationEx:
+                    code = HttpStatusCode.UnprocessableEntity;
+                    foreach(var exception in validationEx.Errors)
                     {
-                        error = "Desila se neocekivana greska na serveru."
-                    });
-            } 
-            else
-            {
-                result = JsonConvert.SerializeObject(
-                   new
-                   {
-                       error = ex.Message
-                   });
+                        errors.Add(new { property = exception.PropertyName, error = exception.ErrorMessage });
+                    }
+                    break;
+                default:
+                    errors.Add(new { error = ex.Message });
+                    break;
             }
+            
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
 
             _textFileAccessor.WriteNewLine("Desila se neocekivana greska na serveru, Greska: " + ex.Message);
 
-            return context.Response.WriteAsync(result);
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(errors));
 
         }
 
