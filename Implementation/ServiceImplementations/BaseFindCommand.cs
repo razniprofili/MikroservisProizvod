@@ -29,7 +29,6 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
 
             if (entity == null)
             {
-                //return null;
                 throw new EntityNotFoundException($"Nepostojeci {typeof(TEntity).Name.ToLower()}.");
             }
 
