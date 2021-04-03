@@ -37,7 +37,7 @@ namespace Common.Logger
         public void WriteNewLine(string text)
         {
             using (StreamWriter file = new StreamWriter(LoggFilePath, append: true)) {
-                file.WriteLine($"{DateTime.Now} - Logg : {text}");
+                file.WriteLine($"{DateTime.Now:dd.MM.yyyy. HH:mm:ss.fff} - Logg : {text}");
             }
         }
     }

@@ -12,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.CommandImplementations
 {
-    public class BaseAddCommand<TEntity, TDto> : BaseMapperCommand<TEntity,TDto>,IAddCommand<TDto,TDto>
+    public class BaseAddCommand<TEntity, TDto, TReadDto> : BaseMapperCommand<TEntity,TDto>,IAddCommand<TDto,TReadDto>
         where TEntity : BaseEntity
         where TDto : BaseDto
+        where TReadDto : BaseDto
     {
         private readonly IValidator<TDto> _validator;
         public BaseAddCommand(IGenericRepository<TEntity> genericRepository, IMapper mapper, IValidator<TDto> validator) : base(genericRepository, mapper)
@@ -22,7 +23,7 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
             _validator = validator;
         }
 
-        public virtual TDto Execute(TDto dto)
+        public virtual TReadDto Execute(TDto dto)
         {
             var validationResult = _validator.Validate(dto);
 
@@ -35,9 +36,9 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
 
             _genericRepository.Add(mappedEntity);
 
-            dto.Id = mappedEntity.Id;
-
-            return dto;
+            return _mapper.Map<TReadDto>(_genericRepository.FirstOrDefault(x => x.Id == mappedEntity.Id, IncludedPropertiesOnExport));
         }
+
+        protected virtual string IncludedPropertiesOnExport => "";
     }
 }

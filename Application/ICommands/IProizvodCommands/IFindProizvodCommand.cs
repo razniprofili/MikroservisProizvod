@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MikroServisProizvod.Application.ICommands
 {
-    public interface IFindProizvodCommand : IFindCommand<ProizvodDto>
+    public interface IFindProizvodCommand : IFindCommand<ReadProizvodDto>
     {
     }
 }

@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Commands
 {
-    public class FindProizvodCommand : BaseFindCommand<Domen.Proizvod, ProizvodDto>, IFindProizvodCommand
+    public class FindProizvodCommand : BaseFindCommand<Domen.Proizvod, ReadProizvodDto>, IFindProizvodCommand
     {
         public FindProizvodCommand(IGenericRepository<Domen.Proizvod> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {
         }
 
-        public override string IncludedEntities => "JedinicaMere,TipProizvoda,Dobavljaci";
+        public override string IncludedEntities => "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac";
     }
 }

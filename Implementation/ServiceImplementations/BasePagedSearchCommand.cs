@@ -28,17 +28,10 @@ namespace MikroServisProizvod.Implementation.CommandImplementations
 
         public virtual object Execute(TSearch search)
         {
-            IQueryable<TEntity> entities;
-
-            if (IncludedProperties.Length > 0)
-            {
-                entities = _genericRepository.Search(SearchExpression(search), IncludedProperties);//"TipProizvoda,JedinicaMere,Dobavljaci"
-            }
-            else
-            {
-                entities = _genericRepository.Search(SearchExpression(search));
-            }
-
+            IQueryable<TEntity> entities = IncludedProperties.Length > 0
+                ? _genericRepository.Search(SearchExpression(search), IncludedProperties)
+                : _genericRepository.Search(SearchExpression(search));
+            
             var totalCount = entities.Count();
 
             if (search.IsPagedResponse)

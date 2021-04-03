@@ -38,13 +38,6 @@ namespace Data
             return _context.Set<T>();
         }
 
-        //public IQueryable<T> Search(Expression<Func<T, bool>> expression)
-        //{
-        //    var query = _context.Set<T>().AsQueryable();
-
-        //    return query.Where(expression);
-        //}
-
         public virtual T FirstOrDefault(Expression<Func<T, bool>> match, string includePropreties = null)
         {
             var query = _context.Set<T>().AsQueryable();
@@ -67,7 +60,6 @@ namespace Data
 
             if (!string.IsNullOrWhiteSpace(includePropreties))
             {
-                //da bude ovako: "User, MovieJMDBApi" npr
                 foreach (var prop in includePropreties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(prop);

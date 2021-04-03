@@ -65,7 +65,7 @@ namespace MikroservisProizvod.API.Middleware
                         Message = "Validation exception"
                     };
                     break;
-                case EntityNotFoundException nfex:
+                case EntityNotFoundException:
                     errorText = "Entitet sa prosledjenim identifikatorom nije pronadjen u bazi : ";
                     code = HttpStatusCode.NotFound;
                     errorResponse = new

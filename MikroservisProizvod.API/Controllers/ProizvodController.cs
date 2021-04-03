@@ -2,7 +2,6 @@
 using Common;
 using Microsoft.AspNetCore.Mvc;
 using MikroservisProizvod.API.ApiCore;
-using MikroservisProizvod.API.Helpers;
 using MikroServisProizvod.Application.ICommands;
 using MikroServisProizvod.Application.ICommands.Commands.Models;
 using System;
@@ -12,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace MikroservisProizvod.API.Controllers
 {
-    [ValidateModel]
     [Produces("application/json")]
     [Route("api/Proizvod")]
     public class ProizvodController : Controller

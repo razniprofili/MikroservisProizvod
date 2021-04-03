@@ -3,8 +3,10 @@ using Data;
 using Domen;
 using FluentValidation;
 using FluentValidation.Results;
+using MikroServisProizvod.Application.Exceptions;
 using MikroServisProizvod.Application.ICommands;
 using MikroServisProizvod.Application.ICommands.Commands.Models;
+using MikroServisProizvod.Application.SeparatedModels;
 using MikroServisProizvod.Implementation.CommandImplementations.Proizvod.Commands;
 using Moq;
 using NUnit.Framework;
@@ -22,6 +24,8 @@ namespace MikroservisProizvod.Test.ProizvodTests
         //private ProizvodDto proizvodToUpdate;
         private Proizvod mappedProizvod;
         private Proizvod proizvodFromDatabase;
+        private ReadProizvodDto mappedProizvodForReturn;
+        private Proizvod updatedProizvodFromDb;
 
         [SetUp]
         public void Setup()
@@ -34,7 +38,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
           
             mappedProizvod = new Proizvod
             {
-                Id = 0,
+                Id = 1,
                 Naziv = "Proizvod 1 update",
                 Cena = 11.1,
                 Pdv = 0.11,
@@ -69,6 +73,63 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 Cena = 11.1,
                 Pdv = 0.11,
             };
+
+            updatedProizvodFromDb = new Proizvod
+            {
+                Id = 1,
+                Naziv = "Proizvod 1 update",
+                Cena = 11.1,
+                Pdv = 0.11,
+                JedinicaMere = new JedinicaMere
+                {
+                    Id = 1,
+                    Naziv = "Jedinica mere 1"
+                },
+                TipProizvoda = new TipProizvoda
+                {
+                    Id = 1,
+                    Naziv = "Tip proizvoda 1"
+                },
+                Dobavljaci = new List<ProizvodDobavljac>
+                {
+                    new ProizvodDobavljac{
+                        Dobavljac = new Dobavljac
+                        {
+                            Id = 1,
+                            PIB = "123",
+                            Napomena = "Napomena",
+                            Naziv = "Dobavljac 1"
+                        }
+                    }
+                }
+            };
+
+            mappedProizvodForReturn = new ReadProizvodDto
+            {
+                Id = 1,
+                Naziv = "Proizvod 1 update",
+                Cena = 11.1,
+                Pdv = 0.11,
+                JedinicaMere = new JedinicaMereDto
+                {
+                    Id = 1,
+                    Naziv = "Jedinica mere 1"
+                },
+                TipProizvoda = new TipProizvodaDto
+                {
+                    Id = 1,
+                    Naziv = "Tip proizvoda 1"
+                },
+                Dobavljaci = new List<DobavljacDto>
+                {
+
+                    new DobavljacDto
+                    {
+                        Id = 1,
+                        Naziv = "Dobavljac 1"
+                    }
+                }
+            };
         }
 
         [Test]
@@ -99,6 +160,12 @@ namespace MikroservisProizvod.Test.ProizvodTests
             _mockMapper.Setup(m => m.Map<Proizvod>(proizvodToUpdate))
                 .Returns(mappedProizvod);
 
+            _mockMapper.Setup(m => m.Map<ReadProizvodDto>(updatedProizvodFromDb))
+                  .Returns(mappedProizvodForReturn);
+
+            _mockGenericRepository.Setup(gr => gr.FirstOrDefault(p => p.Id == proizvodToUpdate.Id, "JedinicaMere,TipProizvoda,Dobavljaci.Dobavljac"))
+                   .Returns(updatedProizvodFromDb);     
+
             // izvrsenje
             var result = _updateProizvodCommand.Execute(proizvodToUpdate);
 
@@ -128,7 +195,7 @@ namespace MikroservisProizvod.Test.ProizvodTests
                 .Returns((Proizvod)null);
 
             // izvrsenje i provera
-            Exception ex = Assert.Throws<ValidationException>(delegate { _updateProizvodCommand.Execute(proizvodToUpdate); });
+            Exception ex = Assert.Throws<EntityNotFoundException>(delegate { _updateProizvodCommand.Execute(proizvodToUpdate); });
             Assert.That(ex.Message, Is.EqualTo("Nepostojeci proizvod poslat na azuriranje."));
 
         }
